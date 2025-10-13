@@ -1,20 +1,22 @@
 '%dev':
-  tech-trends:
+  tech-lab-ingester:
     export:
       INDICATOR:
         csv:
+          enabled: true
           to:
             gcp:
-              enabled: false
+              enabled: true
       TECHNOLOGY:
         csv:
+          enabled: true
           to:
             gcp:
-              enabled: false
+              enabled: true
     projects:
       per:
         page: 10
-        platform: 100
+        platform: 1000
 
 camel:
   threadpool:
@@ -22,6 +24,11 @@ camel:
     max-pool-size: 10
     max-queue-size: -1
 quarkus:
+  camel:
+    routes-discovery:
+      enabled: true
+    expression:
+      extraction-enabled: false
   datasource:
     db-kind: postgresql
     devservices:
@@ -30,9 +37,9 @@ quarkus:
       volumes:
         "data/database/postgresql": /var/lib/postgresql/data
       reuse: true
-      db-name: tech-trendz
-      username: tech-trendz
-      password: tech-trendz
+      db-name: tech-lab-ingester
+      username: tech-lab-ingester
+      password: tech-lab-ingester
     health:
       enabled: true
     jdbc:
@@ -45,6 +52,8 @@ quarkus:
   hibernate-orm:
     database:
       generation: update
+  http:
+    port: 9000
   log:
     console:
       level: DEBUG
@@ -77,10 +86,15 @@ quarkus:
   smallrye-graphql-client:
     github:
       header:
-        Authorization: Bearer ${tech-trends.github.token}
+        Authorization: Bearer ${tech-lab-ingester.github.token}
         Content-Type: application/json; charset=utf-8
       url: https://api.github.com/graphql
-tech-trends:
+tech-lab-ingester:
+  # Values in this key should be in the form "platform:name"
+  priorized-technologies:
+    - NPM:react
+    - NPM:vue
+    - NPM:@angular/core
   export:
     INDICATOR_COMPUTATION:
       csv:
@@ -97,6 +111,16 @@ tech-trends:
             enabled: false
       
   indicators:
+    computations:
+      findAllPriorized:
+        sql: |
+          select *
+            from indicator_computation ic
+            order by 
+            ic.technology_id in :priorized desc,
+            ic.status desc,
+            ic.indicator_date  asc,
+            ic.technology_id asc;
     github:
       stars:
         graphql:
@@ -161,6 +185,99 @@ tech-trends:
                   nodes {
                     createdAt 
                     owner {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM FORK_DATE) AS FORK_YEAR,
+              EXTRACT(MONTH FROM FORK_DATE) AS FORK_MONTH,
+              COUNT(FORK_DATE) AS FORK_BY_MONTH
+            FROM
+              GITHUB_FORKS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
+
+      issues:
+        graphql:
+          # Query for total number of issues
+          today: |
+            query ($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                issues {
+                  totalCount
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query ($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                issues(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt
+                    author {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual issues
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM ISSUE_DATE) AS ISSUE_YEAR,
+              EXTRACT(MONTH FROM ISSUE_DATE) AS ISSUE_MONTH,
+              COUNT(ISSUE_DATE) AS ISSUE_BY_MONTH
+            FROM
+              GITHUB_ISSUES
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM ISSUE_DATE), EXTRACT(MONTH FROM ISSUE_DATE);
+      discussions: # New section for discussions
+        graphql:
+          # Query for total number of discussions
+          today: |
+            query($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                discussions {
+                  totalCount
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                discussions(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt 
+                    author {
                       login
                     }
                   }
