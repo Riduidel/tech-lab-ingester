@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow.api;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow.api;
 
 import java.time.temporal.ChronoUnit;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow.api;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow.api;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,10 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.Test;
+
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.StackExchangeClient;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.StackExchangeList;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.Tag;
 
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;

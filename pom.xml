@@ -256,8 +256,7 @@
                 <configuration>
                     <systemProperties>
                         <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
-                        <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-in
-This message and any attachments are confidential and intended solely for the addressees, it may contain confidential and/or privileged information. Any use not in accord with its purpose, any dissemination or disclosure, either whole or partial, is prohibited exgester.libraries.io.token>
+                        <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
                     </systemProperties>
                 </configuration>
                 <executions>

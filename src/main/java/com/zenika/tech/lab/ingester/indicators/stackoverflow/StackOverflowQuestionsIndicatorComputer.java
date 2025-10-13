@@ -1,19 +1,14 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow;
-
-import java.util.Map;
-import java.util.function.Function;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
-import org.ndx.aadarchi.technology.detector.indicators.IndicatorComputer;
-import org.ndx.aadarchi.technology.detector.model.Technology;
+
+import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
+import com.zenika.tech.lab.ingester.model.Technology;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 
 @ApplicationScoped

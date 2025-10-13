@@ -1,11 +1,12 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.ndx.aadarchi.technology.detector.indicators.stackoverflow.api.StackExchangeClient;
-import org.ndx.aadarchi.technology.detector.indicators.stackoverflow.api.StackExchangeList;
-import org.ndx.aadarchi.technology.detector.indicators.stackoverflow.api.Tag;
-import org.ndx.aadarchi.technology.detector.model.Technology;
+
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.StackExchangeClient;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.StackExchangeList;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.Tag;
+import com.zenika.tech.lab.ingester.model.Technology;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;

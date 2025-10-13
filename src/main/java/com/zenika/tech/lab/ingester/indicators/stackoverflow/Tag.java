@@ -1,4 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,6 +1,4 @@
-package org.ndx.aadarchi.technology.detector.indicators.stackoverflow;
-
-import org.ndx.aadarchi.technology.detector.model.Indicator;
+package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
