@@ -93,6 +93,8 @@ tech-lab-ingester:
   # Values in this key should be in the form "platform:name"
   priorized-technologies:
     - NPM:react
+    - NPM:vue
+    - NPM:@angular/core
   export:
     INDICATOR_COMPUTATION:
       csv:
