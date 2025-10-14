@@ -19,7 +19,7 @@ public class TagsService {
 	@Inject TagsRepository tagsRepository;
 
 	public boolean hasTagFor(Technology technology) {
-		StackExchangeList<Tag> receivedTags = stackExchange.getTags("stackoverflow", 0, tagsPerPage, null, null);
+		StackExchangeList<Tag> receivedTags = stackExchange.getTags("stackoverflow", 0, tagsPerPage);
 		throw new UnsupportedOperationException("TODO implement TagsService#hasTagFor");
 	}
 }

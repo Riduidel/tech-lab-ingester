@@ -78,6 +78,8 @@ quarkus:
       url: https://api.npmjs.org/
     librariesio:
       url: https://libraries.io/api
+    stackexchange:
+      url: https://api.stackexchange.com/
     logging:
       body-limit: 1024
       scope: request-response
