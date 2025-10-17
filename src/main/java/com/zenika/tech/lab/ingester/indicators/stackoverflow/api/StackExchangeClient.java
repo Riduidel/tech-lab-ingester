@@ -7,6 +7,11 @@ import java.util.stream.Collectors;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import org.jboss.resteasy.reactive.Separator;
 
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.StackExchangeList;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagWiki;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.Total;
+
 import io.quarkus.rest.client.reactive.ClientQueryParam;
 import io.smallrye.faulttolerance.api.RateLimit;
 import jakarta.ws.rs.GET;
@@ -14,7 +19,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 
-@RateLimit(value = 60, window = 1, windowUnit = ChronoUnit.MINUTES)
 @RegisterRestClient(configKey = "stackexchange")
 @ClientQueryParam(name="key", value="${tech-lab-ingester.stackexchange.api.key}")
 @Path("/2.3")
@@ -23,12 +27,16 @@ public interface StackExchangeClient {
 	 * @see https://api.stackexchange.com/docs/tags
 	 */
 	@GET @Path("/tags")
-	// We have to make sure the last activity date is returned
+	// TODO make this filter configurable
 	@ClientQueryParam(name = "filter", value = "!6N4UX.)7jZzX1")
-	public StackExchangeList<Tag> getTags(
+	public StackExchangeList<TagDefinition> getTags(
 			@QueryParam("site") String site,
 			@QueryParam("page") int page, 
 			@QueryParam("pagesize") int pagesize);
+	
+	public default long getTagsCount(String site) {
+		return ___do_not_call_outside_interface___doGetCount(site).total();
+	}
 
 	/**
 	 * @see https://api.stackexchange.com/docs/tags
@@ -36,7 +44,7 @@ public interface StackExchangeClient {
 	@GET @Path("/tags")
 	// We have to make sure the last activity date is returned
 	@ClientQueryParam(name = "filter", value = "total") 
-	public Total getTagsCount(
+	public Total ___do_not_call_outside_interface___doGetCount(
 			@QueryParam("site") String site);
 
 	default public StackExchangeList<TagWiki> getTagsWikis(String site, 

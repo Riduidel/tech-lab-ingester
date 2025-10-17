@@ -15,7 +15,7 @@ import jakarta.inject.Inject;
 public class StackOverflowQuestionsIndicatorComputer extends EndpointRouteBuilder implements IndicatorComputer {
 	public static final String STACKOVERFLOW_QUESTIONS_COUNT = "stackoverflow.questions.count";
 	private static final String ROUTE_NAME = "compute-"+STACKOVERFLOW_QUESTIONS_COUNT.replace('.', '-');
-	private @Inject TagsService tagsService;
+	private @Inject TagService tagsService;
 	
 	private DirectEndpointBuilder getFromRoute() {
 		return direct(ROUTE_NAME);

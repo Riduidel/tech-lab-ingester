@@ -9,7 +9,14 @@ import org.assertj.core.api.Assertions;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.assertj.core.api.SoftAssertions;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.StackExchangeList;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagWiki;
 
 import io.quarkus.test.junit.QuarkusTest;
 
@@ -36,27 +43,25 @@ class StackExchangeClientTest extends CamelQuarkusTestSupport {
 	
 	@Test void can_have_tag_count() {
 		Assertions.assertThat(client.getTagsCount("scifi"))
-			.extracting(t -> t.total)
-			.asInstanceOf(InstanceOfAssertFactories.LONG)
 			.isGreaterThan(1000L);
 	}
 
 	@Test
 	void can_get_list_of_tags() {
 		// When
-		StackExchangeList<Tag> tags = client.getTags("scifi", 1, 100);
+		StackExchangeList<TagDefinition> tags = client.getTags("scifi", 1, 100);
 		// Then
 		SoftAssertions.assertSoftly(assertions -> {
-			assertions.assertThat(tags.hasMore)
+			assertions.assertThat(tags.hasMore())
 				.describedAs("There are more than 100 tags on scifi site")
 				.isTrue();
-			assertions.assertThat(tags.quota_max)
+			assertions.assertThat(tags.quotaMax())
 				.describedAs("max quota is standard one")
 				.isEqualTo(10_000);
-			assertions.assertThat(tags.quota_remaining)
+			assertions.assertThat(tags.quotaRemaining())
 				.describedAs("We should have some quota remaining")
 				.isPositive();
-			assertions.assertThat(tags.items)
+			assertions.assertThat(tags.items())
 				.describedAs("We got some tags")
 				.isNotEmpty();
 		});
@@ -69,20 +74,20 @@ class StackExchangeClientTest extends CamelQuarkusTestSupport {
 				Arrays.asList("marvel", "story-identification"), 1, 100);
 		// Then
 		SoftAssertions.assertSoftly(assertions -> {
-			assertions.assertThat(tags.hasMore)
+			assertions.assertThat(tags.hasMore())
 				.describedAs("There are only two wiki pages given")
 				.isFalse();
-			assertions.assertThat(tags.quota_max)
+			assertions.assertThat(tags.quotaMax())
 				.describedAs("max quota is standard one")
 				.isEqualTo(10_000);
-			assertions.assertThat(tags.quota_remaining)
+			assertions.assertThat(tags.quotaRemaining())
 				.describedAs("We should have some quota remaining")
 				.isPositive();
-			assertions.assertThat(tags.items)
+			assertions.assertThat(tags.items())
 				.describedAs("We got some tags")
 				.isNotEmpty();
-			assertions.assertThat(tags.items)
-				.extracting(t -> t.tagName)
+			assertions.assertThat(tags.items())
+				.extracting(t -> t.tagName())
 				.asList()
 				.contains("marvel", "story-identification");
 		});

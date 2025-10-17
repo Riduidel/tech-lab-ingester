@@ -1,5 +1,9 @@
+@key = rl_JFATMHuP9RYHufpsKgyQbS1cw
+@site = scifi
+@tag_filter = !6N4UX.)7jZzX1
+@wiki_filter = !nNPvSNMavg
 
-@test_tag = "marvel;story-identification"
+@test_tag = "looking-at-women-looking-at-war"
 
 ### Requête pour récupérer le nombre de tags
 GET https://api.stackexchange.com/2.3/tags?site={{site}}&filter=total

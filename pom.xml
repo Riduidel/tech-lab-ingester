@@ -285,10 +285,10 @@
                                 <requireJavaVersion>
                                     <version>21</version>
                                 </requireJavaVersion>
-                                <!-- <requireProperty>
-									<property>tech-lab-ingester.stackexchange.api.key</property>
-									<message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
-								</requireProperty> -->
+                                <requireProperty>
+                                    <property>tech-lab-ingester.stackexchange.api.key</property>
+                                    <message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
+                                </requireProperty>
                                 <requireProperty>
                                     <property>tech-lab-ingester.libraries.io.token</property>
                                     <message><![CDATA[tech-lab-ingester.libraries.io.token must be specified.]]></message>
@@ -297,10 +297,10 @@
                                     <property>tech-lab-ingester.github.token</property>
                                     <message><![CDATA[tech-lab-ingester.github.token must be specified.]]></message>
                                 </requireProperty>
-                                <!-- <requireProperty>
-									<property>tech-lab-ingester.bigQuery.projectId</property>
-									<message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
-								</requireProperty> -->
+                                <requireProperty>
+                                    <property>tech-lab-ingester.bigQuery.projectId</property>
+                                    <message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
+                                </requireProperty>
                             </rules>
                         </configuration>
                     </execution>
@@ -376,6 +376,8 @@
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                         <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+                        <tech-lab-ingester.stackexchange.api.key>${tech-lab-ingester.stackexchange.api.key}</tech-lab-ingester.stackexchange.api.key>
+                        <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
