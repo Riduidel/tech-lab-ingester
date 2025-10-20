@@ -19,6 +19,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
 
+@RateLimit(value = 30, window = 1, windowUnit = ChronoUnit.SECONDS)
 @RegisterRestClient(configKey = "stackexchange")
 @ClientQueryParam(name="key", value="${tech-lab-ingester.stackexchange.api.key}")
 @Path("/2.3")

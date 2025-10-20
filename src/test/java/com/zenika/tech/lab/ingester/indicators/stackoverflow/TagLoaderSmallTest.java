@@ -24,8 +24,8 @@ import jakarta.inject.Inject;
  * This is why this test is a full blown quarkus test
  */
 @QuarkusTest
-@TestProfile(TagLoaderTest.Configuration.class)
-class TagLoaderTest extends CamelQuarkusTestSupport {
+@TestProfile(TagLoaderSmallTest.Configuration.class)
+class TagLoaderSmallTest extends CamelQuarkusTestSupport {
 	
 	@Inject TagService tags;
 	
@@ -64,7 +64,7 @@ class TagLoaderTest extends CamelQuarkusTestSupport {
 			.isInstanceOf(List.class)
 			.asList()
 			.extracting("name")
-			.contains("story-identification")
+			.contains("identification-request")
 			;
 		return true;
 	}

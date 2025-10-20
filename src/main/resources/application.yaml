@@ -73,6 +73,14 @@ quarkus:
           - period: 1m
             permitted-uses: 60
             shared: true
+      stackexchange:
+        limits:
+          - period: 1s
+            permitted-uses: 30
+            shared: true
+          - period: 1s
+            permitted-uses: 30
+            shared: true
   rest-client:
     npmjs-api:
       url: https://api.npmjs.org/

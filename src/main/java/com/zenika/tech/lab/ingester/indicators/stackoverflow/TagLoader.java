@@ -6,6 +6,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.processor.aggregate.AbstractListAggregationStrategy;
+import org.apache.commons.collections4.ListUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
@@ -33,6 +34,8 @@ public class TagLoader extends EndpointRouteBuilder {
 	
 	@ConfigProperty(name="tech-lab-ingester.indicators.stackexchange.tags.sites", defaultValue="stackoverflow")
 	List<String> sites;
+	@ConfigProperty(name = "tech-lab-ingester.indicators.stackexchange.wikis.per.page", defaultValue = "20")
+	int wikisPerPage;
 	
 	@Inject TagDefinitionLoader loader;
 	@Inject TagService tags;
@@ -42,7 +45,7 @@ public class TagLoader extends EndpointRouteBuilder {
 		from(direct(getClass().getSimpleName()))
 			.id(getClass().getSimpleName()+"-1-download-all-tags")
 			.log(LoggingLevel.INFO, "Downloading all tags")
-			.setBody(constant(sites))
+			.process(this::selectSites)
 			.split(body())
 				.setHeader(STACKEXCHANGE_SITE, body())
 				.log(LoggingLevel.INFO, "📥 Downloading all tags of ${in.headers.stackexchange.site}")
@@ -50,10 +53,11 @@ public class TagLoader extends EndpointRouteBuilder {
 				.log(LoggingLevel.INFO, "✅ Downloaded all tags of ${in.headers.stackexchange.site}")
 				.log(LoggingLevel.INFO, "🖴 Persisting all tags of ${in.headers.stackexchange.site}")
 				.split(body())
-					.parallelProcessing()
-					.process(this::persistToTag)
+					// Do not activate parallel processing yet
+					.process(this::persistToTags)
 					.end()
 				.log(LoggingLevel.INFO, "✅ Persisted all tags of ${in.headers.stackexchange.site}")
+				.end()
 			// Pretty sure it can be optimized with aggregates
 			.process(this::getAllTags)
     		.end();
@@ -62,19 +66,25 @@ public class TagLoader extends EndpointRouteBuilder {
 	public void downloadTagsOf(Exchange e) {
 		String site = e.getMessage().getBody(String.class);
 		List<TagDefinition> tags = loader.loadTagDefinitionsFrom(site);
-		e.getMessage().setBody(tags);
+		// For ease of descendant process, we split the list
+		// into lists of 20 elements here
+		e.getMessage().setBody(ListUtils.partition(tags, wikisPerPage));
 		// We also set a header to make sure we can later aggregate correctly
 		e.getMessage().setHeader(STACKEXCHANGE_TAGS_COUNT, tags.size());
 	}
 
-	private void persistToTag(Exchange e) {
+	private void persistToTags(Exchange e) {
 		String site = e.getMessage().getHeader(STACKEXCHANGE_SITE, String.class);
-		TagDefinition definition = e.getMessage().getBody(TagDefinition.class);
-		Tag tag = tags.maybePersist(site, definition);
+		List<TagDefinition> definitions = e.getMessage().getBody(List.class);
+		List<Tag> tag = tags.maybePersist(site, definitions);
 		e.getMessage().setBody(tag);
 	}
 
 	private void getAllTags(Exchange exchange) {
 		exchange.getMessage().setBody(tags.findAll());
+	}
+
+	private void selectSites(Exchange exchange) {
+		exchange.getMessage().setBody(sites);
 	}
 }

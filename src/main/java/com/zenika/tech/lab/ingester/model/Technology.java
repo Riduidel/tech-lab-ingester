@@ -2,8 +2,6 @@ package com.zenika.tech.lab.ingester.model;
 
 import java.util.Objects;
 
-import org.apache.avro.reflect.AvroDoc;
-import org.apache.avro.reflect.AvroIgnore;
 import org.jilt.Builder;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -18,7 +16,6 @@ import jakarta.persistence.NamedNativeQuery;
 /**
  * Class containing stored informations of technologies.
  */
-@AvroDoc("A technology (see glossary). This class is mainly modeled from libraries.io representation")
 @Entity
 @NamedNativeQueries({
 	@NamedNativeQuery(name="TECHNOLOGY.CSV.EXPORT", query="""
@@ -33,26 +30,19 @@ from technology
 })
 @Builder
 public class Technology extends PanacheEntityBase {
-	@AvroDoc("Common name of that technology")
 	public String name;
-	@AvroDoc("A longer description of technology")
 	@Column(columnDefinition = "text")
 	public String description;
 
 	/**
 	 * The homepage is usually the technology vanity url
 	 */
-	@AvroDoc("The homepage is usually the technology vanity url")
 	public String homepage;
 
-	@AvroIgnore
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TECHNOLOGY_ID_SEQ")
 	public Long id;
-	@AvroDoc("url of that technology in the package manager used to distribute it")
 	public String packageManagerUrl;
-	@AvroDoc("source code repository url")
 	public String repositoryUrl;
-	@AvroDoc("Distribution platform for the technology. It doesn't implies a specific language is used.")
 	public String platform;
 	
 	public Technology() {}

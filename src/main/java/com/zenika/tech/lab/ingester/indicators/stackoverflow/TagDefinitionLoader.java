@@ -2,6 +2,8 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -41,6 +43,12 @@ public class TagDefinitionLoader {
 		Log.infof("Fetching wiki page for %s", tagdefinition);
 		StackExchangeList<TagWiki> returned = stackExchange.getTagsWikis(site, tagdefinition.name(), 1, 1);
 		return returned.items().getFirst();
+	}
+
+	public List<TagWiki> loadWikiInfos(String site, List<TagDefinition> tagdefinition) {
+		Log.infof("Fetching wiki page for %s", tagdefinition.stream().map(TagDefinition::name).collect(Collectors.joining()));
+		StackExchangeList<TagWiki> returned = stackExchange.getTagsWikis(site, tagdefinition.stream().map(TagDefinition::name).collect(Collectors.toList()), 1, tagdefinition.size());
+		return returned.items();
 	}
 
 }
