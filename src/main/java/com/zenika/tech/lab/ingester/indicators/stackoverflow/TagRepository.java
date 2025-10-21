@@ -1,6 +1,7 @@
 package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagWiki;
+import com.zenika.tech.lab.ingester.model.Technology;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import io.quarkus.panache.common.Parameters;
@@ -92,6 +94,23 @@ public class TagRepository implements PanacheRepository<Tag> {
 	private Tag updateFromTagDefinition(Tag existing, TagDefinition tag,
 			Supplier<Optional<TagWiki>> wikiDownloader) {
 		return existing;
+	}
+
+	public boolean hasTagsFor(Technology technology) {
+		return count("technology=:technology", 
+				Parameters.with("technology", technology))>0;
+	}
+
+	public Collection<Tag> findByExcerptContainingUrl(String repositoryUrl) {
+		return find("excerpt like :text", 
+				Parameters.with("text", "%"+repositoryUrl+"%"))
+				.list();
+	}
+
+	public Collection<Tag> findByWikiContainingUrl(String repositoryUrl) {
+		return find("wiki like :text", 
+				Parameters.with("text", "%"+repositoryUrl+"%"))
+				.list();
 	}
 
 }

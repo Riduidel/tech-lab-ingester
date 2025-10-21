@@ -1,14 +1,19 @@
 package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.jilt.Builder;
+
+import com.zenika.tech.lab.ingester.model.Technology;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -42,9 +47,13 @@ public class Tag {
 	@Column(columnDefinition = "TEXT")
 	public String excerpt;
 	
+	@ManyToOne @JoinColumn(nullable = true)
+	public Technology technology;
+	
 	public Tag() {}
 
-	public Tag(Long id, String site, String name, List<String> synonmyms, String wiki, String excerpt) {
+	public Tag(Long id, String site, String name, List<String> synonmyms, String wiki, String excerpt,
+			Technology t) {
 		super();
 		this.id = id;
 		this.site = site;
@@ -52,5 +61,23 @@ public class Tag {
 		this.synonmyms = synonmyms;
 		this.wiki = wiki;
 		this.excerpt = excerpt;
+		this.technology = t;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, site);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tag other = (Tag) obj;
+		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(site, other.site);
 	}
 }

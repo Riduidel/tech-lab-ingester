@@ -49,13 +49,13 @@ class TagLoaderSmallTest extends CamelQuarkusTestSupport {
                 from("direct:start")
                 	.log("Activate only the route to test")
                 	.to(DirectEndpointBuilderFactory.endpointBuilder("direct", TagLoader.class.getSimpleName()))
-                	.to("mock:result")
+                	.to("mock:TagLoaderSmallTest")
                     .end();
             }
         };
     }
 	
-	@EndpointInject("mock:result")
+	@EndpointInject("mock:TagLoaderSmallTest")
     MockEndpoint mockEndpoint;
 	
 	public boolean containsListOfTags(Exchange exchange) {

@@ -13,6 +13,7 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.TagService;
 import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
 import com.zenika.tech.lab.ingester.librariesio.model.Platform;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -37,6 +38,8 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
 		this.technologies = technologies;
 	}
+	
+	@Inject TagService tags;
 
 	private Map<String, String> platformMappings;
 	
@@ -49,17 +52,18 @@ public class AddMissingFields extends EndpointRouteBuilder {
 			// Load all technologies
 			// I think it will be necessary to have some kind of batch processing
 			.process(technologies::findAllTechnologies)
-			.log("✅  Found ${body.size} technologies")
+			.log("⏳️ Adding missing elements to ${body.size} technologies")
 			.split(body())
 //				.parallelProcessing()
 				.to(ADD_MISSING_FIELDS)
 				.end()
-			.log("🎉 All indicators computations have been created, now searching them by date")
+			.log("✅ All missing elements have been added")
 	    	;
     	from(ADD_MISSING_FIELDS)
 			.routeId(getClass().getSimpleName()+"-2-add-missing-fields")
 			.description("Add missing fields to technology")
 			.process(this::addPlatform)
+			.process(this::addStackExchangeTags)
 			    		;
     }
 
@@ -67,12 +71,19 @@ public class AddMissingFields extends EndpointRouteBuilder {
 		return direct(getClass().getSimpleName());
 	}
 
-	private void addPlatform(Exchange exchange1) {
-		Technology body = (Technology) exchange1.getMessage().getBody();
+	private void addPlatform(Exchange exchange) {
+		Technology body = exchange.getMessage().getBody(Technology.class);
 		if(body.platform==null) {
 			Log.infof("🚚 Adding missing platform to %s", body);
 			Technology technology = addPlatform(body);
-			exchange1.getMessage().setBody(technology);
+			exchange.getMessage().setBody(technology);
+		}
+	}
+	
+	private void addStackExchangeTags(Exchange exchange) {
+		Technology body = exchange.getMessage().getBody(Technology.class);
+		if(!tags.hasTagsFor(body)) {
+			tags.registerTagsFor(body);
 		}
 	}
 

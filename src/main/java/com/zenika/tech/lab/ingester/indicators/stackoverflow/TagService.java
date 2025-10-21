@@ -1,7 +1,9 @@
 package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
@@ -19,12 +21,12 @@ public class TagService {
 	 */
 	@Inject TagDefinitionLoader tagLoader;
 
-	public boolean hasTagFor(Technology technology) {
-		throw new UnsupportedOperationException("TODO implement TagService#hasTagFor");
-	}
-
-	public Long count() {
-		return tags.count();
+	/**
+	 * @param technology
+	 * @return true if there is at least one tag linked to given technology
+	 */
+	public boolean hasTagsFor(Technology technology) {
+		return tags.hasTagsFor(technology);
 	}
 
 	/**
@@ -44,6 +46,7 @@ public class TagService {
 		return tags.findAll().list();
 	}
 
+	@Transactional
 	public List<Tag> maybePersist(String site, List<TagDefinition> tagDefinitions) {
 		List<String> tagNames = tagDefinitions.stream().map(t->t.name()).collect(Collectors.toList());
 		tags.findOrCreate(site, tagDefinitions, () -> tagLoader.loadWikiInfos(site, tagDefinitions));
@@ -52,5 +55,21 @@ public class TagService {
 				.stream()
 				.map(Optional::get)
 				.collect(Collectors.toList());
+	}
+
+	/**
+	 * Find all tags for given technology across the StackExchange-verse (and associate them to that technology)
+	 * @param technology
+	 */
+	@Transactional
+	public void registerTagsFor(Technology technology) {
+		Set<Tag> linkedTags = new LinkedHashSet<Tag>();
+		linkedTags.addAll(tags.findByExcerptContainingUrl(technology.repositoryUrl));
+		linkedTags.addAll(tags.findByWikiContainingUrl(technology.repositoryUrl));
+		linkedTags.stream()
+			.forEach(tag -> {
+				tag.technology = technology;
+			});
+		tags.persist(linkedTags);
 	}
 }

@@ -48,7 +48,7 @@ public class StackOverflowQuestionsIndicatorComputer extends EndpointRouteBuilde
 
 	@Override
 	public boolean canCompute(Technology technology) {
-		return tagsService.hasTagFor(technology);
+		return tagsService.hasTagsFor(technology);
 	}
 
 }

@@ -48,16 +48,30 @@ class TagLoaderFullTest extends CamelQuarkusTestSupport {
                 from("direct:start")
                 	.log("Activate only the route to test")
                 	.to(DirectEndpointBuilderFactory.endpointBuilder("direct", TagLoader.class.getSimpleName()))
-                	.to("mock:result")
+                	.to("mock:TagLoaderFullTest")
                     .end();
             }
         };
     }
 	
-	@EndpointInject("mock:result")
+	@EndpointInject("mock:TagLoaderFullTest")
     MockEndpoint mockEndpoint;
+
+	@Test
+	void can_load_tags_from_stackoverflow() throws InterruptedException {
+		// Given
+        mockEndpoint.setExpectedMessageCount(1);
+        mockEndpoint.allMessages()
+        	.predicate(this::performAsserts)
+        	;
+
+        // When
+		template.sendBody("direct:start", null);
+		// Then
+		mockEndpoint.assertIsSatisfied();
+	}
 	
-	public boolean containsListOfTags(Exchange exchange) {
+	public boolean performAsserts(Exchange exchange) {
 		Object body = exchange.getMessage().getBody();
 		Assertions.assertThat(body)
 			.isInstanceOf(List.class)
@@ -68,17 +82,4 @@ class TagLoaderFullTest extends CamelQuarkusTestSupport {
 		return true;
 	}
 
-	@Test
-	void can_load_tags_from_stackoverflow() throws InterruptedException {
-		// Given
-        mockEndpoint.setExpectedMessageCount(1);
-        mockEndpoint.allMessages()
-        	.predicate(this::containsListOfTags)
-        	;
-
-        // When
-		template.sendBody("direct:start", null);
-		// Then
-		mockEndpoint.assertIsSatisfied();
-	}
 }
