@@ -23,15 +23,6 @@ public class TagLoader extends EndpointRouteBuilder {
 
 	private static final String STACKEXCHANGE_TAGS_COUNT = STACKEXCHANGE_SITE+".size";
 
-	public class ListOfTagsAggregationStrategy extends AbstractListAggregationStrategy<Tag> {
-
-	    @Override
-	    public Tag getValue(Exchange exchange) {
-	        // the message body contains a number, so return that as-is
-	        return exchange.getIn().getBody(Tag.class);
-	    }
-	}
-	
 	@ConfigProperty(name="tech-lab-ingester.indicators.stackexchange.tags.sites", defaultValue="stackoverflow")
 	List<String> sites;
 	@ConfigProperty(name = "tech-lab-ingester.indicators.stackexchange.wikis.per.page", defaultValue = "20")
