@@ -66,13 +66,14 @@ class TagServiceForVirtualTagTest {
 	
 	@AfterEach void delete_virtual_tag() {
 		for(String suffix : Arrays.asList("react", "vue")) {
-			Tag specialTag = tags.findBySiteAndName("test", getClass().getSimpleName()+"-"+suffix).get();
-			tags.delete(specialTag);
+			tags.findBySiteAndName("test", getClass().getSimpleName()+"-"+suffix)
+				.ifPresent(special -> tags.delete(special));
 		}
 	}
 
 	@Test
 	void can_find_technology_and_link_tag() {
+		delete_virtual_tag();
 		create_virtual_tag();
 		try {
 			// Given
@@ -81,6 +82,9 @@ class TagServiceForVirtualTagTest {
 				.extracting(t -> t.technology)
 				.isNull();
 			Technology react = technologies.findById(2L);
+			Assertions.assertThat(react)
+				.extracting(r -> r.name)
+				.isEqualTo("react");
 			// When
 			tested.registerTagsFor(react);
 			// Then

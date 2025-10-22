@@ -24,8 +24,8 @@ import jakarta.inject.Inject;
  * This is why this test is a full blown quarkus test
  */
 @QuarkusTest
-@TestProfile(TagLoaderSmallTest.Configuration.class)
-class TagLoaderSmallTest extends CamelQuarkusTestSupport {
+@TestProfile(TagLoaderTest.Configuration.class)
+class TagLoaderTest extends CamelQuarkusTestSupport {
 	
 	@Inject TagService tags;
 	
@@ -49,13 +49,13 @@ class TagLoaderSmallTest extends CamelQuarkusTestSupport {
                 from("direct:start")
                 	.log("Activate only the route to test")
                 	.to(DirectEndpointBuilderFactory.endpointBuilder("direct", TagLoader.class.getSimpleName()))
-                	.to("mock:TagLoaderSmallTest")
+                	.to("mock:TagLoaderTest")
                     .end();
             }
         };
     }
 	
-	@EndpointInject("mock:TagLoaderSmallTest")
+	@EndpointInject("mock:TagLoaderTest")
     MockEndpoint mockEndpoint;
 	
 	public boolean containsListOfTags(Exchange exchange) {

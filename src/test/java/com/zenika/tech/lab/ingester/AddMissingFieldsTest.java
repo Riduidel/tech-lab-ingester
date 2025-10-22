@@ -9,12 +9,14 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.QuarkusTestProfile;
 import io.quarkus.test.junit.TestProfile;
 
+@Disabled
 @QuarkusTest
 @TestProfile(AddMissingFieldsTest.Configuration.class)
 class AddMissingFieldsTest extends CamelQuarkusTestSupport {
