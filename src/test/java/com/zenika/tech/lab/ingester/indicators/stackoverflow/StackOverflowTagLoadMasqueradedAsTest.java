@@ -12,6 +12,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.Assumptions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import io.quarkus.test.junit.QuarkusTest;
@@ -20,12 +21,12 @@ import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 
 /**
- * We need to have a database started (because this will trigger database writes that I want to cache).
- * This is why this test is a full blown quarkus test
+ * This test is not a real test, but rather a way for us to have all tags loaded.
  */
+@Disabled
 @QuarkusTest
-@TestProfile(TagLoaderFullTest.Configuration.class)
-class TagLoaderFullTest extends CamelQuarkusTestSupport {
+@TestProfile(StackOverflowTagLoadMasqueradedAsTest.Configuration.class)
+class StackOverflowTagLoadMasqueradedAsTest extends CamelQuarkusTestSupport {
 	
 	@Inject TagService tags;
 	
@@ -48,13 +49,13 @@ class TagLoaderFullTest extends CamelQuarkusTestSupport {
                 from("direct:start")
                 	.log("Activate only the route to test")
                 	.to(DirectEndpointBuilderFactory.endpointBuilder("direct", TagLoader.class.getSimpleName()))
-                	.to("mock:TagLoaderFullTest")
+                	.to("mock:StackOverflowTagLoadMasqueradedAsTest")
                     .end();
             }
         };
     }
 	
-	@EndpointInject("mock:TagLoaderFullTest")
+	@EndpointInject("mock:StackOverflowTagLoadMasqueradedAsTest")
     MockEndpoint mockEndpoint;
 
 	@Test
