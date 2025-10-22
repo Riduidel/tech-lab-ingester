@@ -312,6 +312,12 @@ tech-lab-ingester:
               GITHUB_FORKS
             WHERE REPO_OWNER=:owner AND REPO_NAME=:name
             GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
+    stackexchange:
+      NPM:
+        "@babel/preset-env": []
+        "@babel/core": []
+        "@babel/runtime": []
+        "@babel/cli": []
 
   projects:
     per:

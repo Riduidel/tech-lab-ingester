@@ -82,7 +82,7 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	
 	private void addStackExchangeTags(Exchange exchange) {
 		Technology body = exchange.getMessage().getBody(Technology.class);
-		if(!tags.hasTagsFor(body)) {
+		if(!tags.isKnownTechnology(body)) {
 			tags.registerTagsFor(body);
 		}
 	}

@@ -47,13 +47,9 @@ public class Tag {
 	@Column(columnDefinition = "TEXT")
 	public String excerpt;
 	
-	@ManyToOne @JoinColumn(nullable = true)
-	public Technology technology;
-	
 	public Tag() {}
 
-	public Tag(Long id, String site, String name, List<String> synonmyms, String wiki, String excerpt,
-			Technology t) {
+	public Tag(Long id, String site, String name, List<String> synonmyms, String wiki, String excerpt) {
 		super();
 		this.id = id;
 		this.site = site;
@@ -61,7 +57,6 @@ public class Tag {
 		this.synonmyms = synonmyms;
 		this.wiki = wiki;
 		this.excerpt = excerpt;
-		this.technology = t;
 	}
 
 	@Override
@@ -79,5 +74,11 @@ public class Tag {
 			return false;
 		Tag other = (Tag) obj;
 		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(site, other.site);
+	}
+
+	@Override
+	public String toString() {
+		return "Tag [" + (site != null ? "site=" + site + ", " : "") + (name != null ? "name=" + name + ", " : "")
+				 + "]";
 	}
 }

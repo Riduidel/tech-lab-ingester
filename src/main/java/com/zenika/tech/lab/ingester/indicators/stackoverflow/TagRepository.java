@@ -2,6 +2,7 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -96,20 +97,27 @@ public class TagRepository implements PanacheRepository<Tag> {
 		return existing;
 	}
 
-	public boolean hasTagsFor(Technology technology) {
-		return count("technology=:technology", 
-				Parameters.with("technology", technology))>0;
-	}
-
-	public Collection<Tag> findByExcerptContainingUrl(String repositoryUrl) {
+	public Collection<Tag> findByExcerptContainingUrl(String url) {
+		if(url==null || url.isBlank())
+			return Collections.emptySet();
 		return find("excerpt like :text", 
-				Parameters.with("text", "%"+repositoryUrl+"%"))
+				Parameters.with("text", "%"+url+"%"))
 				.list();
 	}
 
-	public Collection<Tag> findByWikiContainingUrl(String repositoryUrl) {
+	public Collection<Tag> findByWikiContainingUrl(String url) {
+		if(url==null || url.isBlank())
+			return Collections.emptySet();
 		return find("wiki like :text", 
-				Parameters.with("text", "%"+repositoryUrl+"%"))
+				Parameters.with("text", "%"+url+"%"))
+				.list();
+	}
+
+	public Collection<? extends Tag> findByName(String name) {
+		if(name==null || name.isBlank())
+			return Collections.emptySet();
+		return find("name=:text", 
+				Parameters.with("text", name))
 				.list();
 	}
 

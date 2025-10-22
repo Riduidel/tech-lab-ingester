@@ -16,7 +16,6 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.QuarkusTestProfile;
 import io.quarkus.test.junit.TestProfile;
 
-@Disabled
 @QuarkusTest
 @TestProfile(AddMissingFieldsTest.Configuration.class)
 class AddMissingFieldsTest extends CamelQuarkusTestSupport {
