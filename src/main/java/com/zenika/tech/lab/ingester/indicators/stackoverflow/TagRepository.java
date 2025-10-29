@@ -96,21 +96,25 @@ public class TagRepository implements PanacheRepository<Tag> {
 			Supplier<Optional<TagWiki>> wikiDownloader) {
 		return existing;
 	}
-
-	public Collection<Tag> findByExcerptContainingUrl(String url) {
+	
+	private Collection<Tag> findByTextFieldContainingUrl(String field, String url) {
 		if(url==null || url.isBlank())
 			return Collections.emptySet();
-		return find("excerpt like :text", 
+		// We remove the protocol part to get rid of http vs https issues
+		if(url.contains("://")) {
+			url = url.substring(url.indexOf("://"));
+		}
+		return find(field+" like :text", 
 				Parameters.with("text", "%"+url+"%"))
 				.list();
 	}
 
+	public Collection<Tag> findByExcerptContainingUrl(String url) {
+		return findByTextFieldContainingUrl("excerpt", url);
+	}
+
 	public Collection<Tag> findByWikiContainingUrl(String url) {
-		if(url==null || url.isBlank())
-			return Collections.emptySet();
-		return find("wiki like :text", 
-				Parameters.with("text", "%"+url+"%"))
-				.list();
+		return findByTextFieldContainingUrl("wiki", url);
 	}
 
 	public Collection<? extends Tag> findByName(String name) {

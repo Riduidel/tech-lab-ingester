@@ -19,4 +19,10 @@ public class KnownTechnologiesRepository implements PanacheRepository<KnownTechn
 		return find("id.technology=?1", body).firstResultOptional();
 	}
 
+	public void delete(Technology technology) {
+		find("id.technology=?1", technology).firstResultOptional()
+			// We cascade the delete, so associated tags will disappear
+			.ifPresent(k -> delete(k));
+	}
+
 }

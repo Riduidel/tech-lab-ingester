@@ -47,8 +47,13 @@ public class KnownTechnology extends PanacheEntityBase  {
 	@JoinTable(
 			name = "STACKOVERFLOW_TECHNOLOGY_TO_TAG",
 			joinColumns = @JoinColumn(name="TECHNOLOGY_ID"),
-			inverseJoinColumns = @JoinColumn(name="TAG_ID")
-			)
+			/**
+			 * Beware, because there is an hidden unicity constraint here : 
+			 * one StackExchange tag cannot be used on more than one technology
+			 */
+			inverseJoinColumns = @JoinColumn(name="TAG_ID", 
+				foreignKey = @ForeignKey(foreignKeyDefinition = "STACKOVERFLOW_TECHNOLOGY_TO_TAG_PK"))
+	)
 	public Set<Tag> linkedTags = new LinkedHashSet<Tag>();
 	
 	public KnownTechnology() {}

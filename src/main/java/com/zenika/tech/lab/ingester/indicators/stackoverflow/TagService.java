@@ -121,8 +121,7 @@ public class TagService {
 	}
 
 	private Optional<List<Tag>> getTags(Technology technology) {
-		String configurationKey = String.format("%s.%s.%s", 
-				PREFIX, technology.platform, technology.name);
+		String configurationKey = getConfigurationKeyFor(technology);
 		if(configuration.isPropertyPresent(configurationKey)) {
 			List<String> potential = configuration.getIndexedProperties(configurationKey);
 			return Optional.of(potential.stream()
@@ -138,10 +137,17 @@ public class TagService {
 		return Optional.empty();
 	}
 
+	private String getConfigurationKeyFor(Technology technology) {
+		return String.format("%s.%s.%s", 
+				PREFIX, technology.platform, technology.name);
+	}
+
+	@Transactional
 	public boolean isKnownTechnology(Technology body) {
 		return knownTechnologies.isKnown(body);
 	}
 
+	@Transactional
 	public boolean hasTagsFor(Technology technology) {
 		if(!isKnownTechnology(technology))
 			return false;
@@ -149,5 +155,21 @@ public class TagService {
 		return ! known.map(k -> k.linkedTags)
 			.map(Collection::isEmpty)
 			.orElse(true);
+	}
+
+	/**
+	 * Remove all known tags for the given technology.
+	 * This helper method should only be used for tests
+	 * @param technology
+	 */
+	@Transactional
+	public void removeTagsFor(Technology technology) {
+		knownTechnologies.delete(technology);
+	}
+
+	public Set<Tag> getTagsFor(Technology technology) {
+		return knownTechnologies.findByTechnology(technology)
+				.map(k -> k.linkedTags)
+				.orElse(Collections.emptySet());
 	}
 }
