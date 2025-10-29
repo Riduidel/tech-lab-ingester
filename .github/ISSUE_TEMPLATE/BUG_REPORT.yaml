@@ -1,0 +1,32 @@
+name: Bug Report
+description: File a bug report.
+title: "🐞: "
+labels: ["type:bug", "state:pending", "priority:now"]
+assignees:
+  - Riduidel
+type: bug
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: How do you trigger this bug? Please walk us through it step by step.
+      placeholder: |
+        1.
+        2.
+    validations:
+      required: true
+  - type: textarea
+    id: what-did-you-expect
+    attributes:
+      label: What did you expect?
+      description: Provide all the details about what you were expecting
+      placeholder: Tell us what you see!
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code, so no need for backticks.
+      render: shell

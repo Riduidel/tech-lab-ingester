@@ -1,0 +1,76 @@
+name: New indicator source
+description: Provides details about a potential indicator data source
+title: "🐞: "
+labels: ["type: feature", "state: pending", "priority: 2day"]
+assignees:
+  - Riduidel
+type: bug
+body:
+- type: input
+  id: source_website
+  attributes:
+    label: What is the source website url?
+    description: "Give the url of the indicator source website"
+    placeholder: "https://linkedin.com, https://youtube.com"
+  validations:
+    required: true
+- type: checkboxes
+  id: source_website_has_api
+  attributes:
+    label: Do the source website provides a way to get data ?
+    options:
+      - label: No (this implies scraping)
+      - label: Yes, through HTTP REST API
+      - label: Yes, through HTTP GraphQL API
+      - label: Yes, through Google BigQuery dataset (this will be costly)
+      - label: Yes, through a data dump (sqlite included)
+  validations:
+    required: true
+- type: textarea
+  id: source_website_documentation
+  attributes:
+    label: Where is access to source website documented?
+    description: "Give us all the good ways to access the source website data"
+    value: |
+      Website api access is documented in []
+
+      The following websites provide examples to data access
+        * 
+        * 
+
+      There are examples using specifically Java code (or Java client API) in
+        * 
+        * 
+
+  validations:
+    required: true
+- type: checkboxes
+  id: supposed_indicators_mapping_ease
+  attributes:
+    label: Will it be easy to map indicators to technologies?
+    description: You may select more than one.
+    options:
+      - label: Yes, website provides an api mapping to "known" technologies names
+      - label: Yes, website uses repository urls
+      - label: Quite, website uses a controlled naming analogous to our
+      - label: No, website uses fuzzy naming which may be mapped to technologies
+  validations:
+    required: true
+- type: textarea
+  id: supposed_indicators
+  attributes:
+    label: What indicators can we build using this website?
+    description: "Name the indicators that we will be able to build"
+    value: |
+      * Number of confabulations
+      * Supercalifragilisticexpialidocious number
+  validations:
+    required: true
+- type: textarea
+  id: potential_priority
+  attributes:
+    label: Why is it important to add these indicators?
+    description: "Is the website representative of developer usage?"
+    value: |
+      This website is important because it impacts a huge number of users ...
+      This website is important because it provides very good sociological informations ...
