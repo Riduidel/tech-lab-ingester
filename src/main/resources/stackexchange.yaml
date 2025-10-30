@@ -158,306 +158,101 @@ tech-lab-ingester:
         pretty-format: []
         jest-util: []
         '@jest/types': []
-        jest-changed-files:
-          'select the correct mappings in this list ': ['stackoverflow:jestjs', 'stackoverflow:storyshots',
-            'stackoverflow:jest-junit']
-        jest-docblock:
-          'select the correct mappings in this list ': ['stackoverflow:jestjs', 'stackoverflow:storyshots',
-            'stackoverflow:jest-junit']
-        '@babel/plugin-transform-flow-strip-types':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-shorthand-properties':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-react-constant-elements':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/code-frame':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/eslint-plugin':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-import-assertions':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-property-literals':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-for-of':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-react-display-name':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/compat-data':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-flow':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-member-expression-literals':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-class-properties':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-typeof-symbol:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-syntax-async-functions:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-spread:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-modules-umd:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-literals:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-classes:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-syntax-trailing-function-commas:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-parameters:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-modules-systemjs:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-modules-amd:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-function-name:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-for-of:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-destructuring:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-computed-properties:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-exponentiation-operator:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-class-properties':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-template-literals:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-sticky-regex:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-shorthand-properties:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-object-super:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-object-rest-spread':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-check-es2015-constants:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-strict-mode:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-block-scoping:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-block-scoped-functions:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-arrow-functions:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babylon:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-syntax-object-rest-spread:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@angular-devkit/core':
-          'select the correct mappings in this list ': ['stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular2-aot', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:angular-cli-v6']
-        '@angular/cli':
-          'select the correct mappings in this list ': ['stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular2-aot', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:angular-cli-v6']
-        '@angular-devkit/schematics':
-          'select the correct mappings in this list ': ['stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular2-aot', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:angular-cli-v6']
-        '@angular-devkit/build-angular':
-          'select the correct mappings in this list ': ['stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular2-aot', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:angular-cli-v6']
-        ember-source:
-          'select the correct mappings in this list ': ['stackoverflow:ember.js',
-            'stackoverflow:discourse']
-        '@sveltejs/package':
-          'select the correct mappings in this list ': ['stackoverflow:svelte', 'stackoverflow:sveltekit',
-            'stackoverflow:svelte-store']
-        '@sveltejs/kit':
-          'select the correct mappings in this list ': ['stackoverflow:svelte', 'stackoverflow:sveltekit',
-            'stackoverflow:svelte-store']
-        use-subscription:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        react-reconciler:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        react-devtools-core:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        react-addons-pure-render-mixin:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        react-addons-shallow-compare:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        create-react-class:
-          'select the correct mappings in this list ': ['stackoverflow:react-fiber',
-            'stackoverflow:react-native-fbsdk', 'stackoverflow:reactjs', 'stackoverflow:este.js',
-            'stackoverflow:react-360', 'stackoverflow:react-test-renderer']
-        '@react-native/eslint-config':
-          'select the correct mappings in this list ': ['stackoverflow:react-native-fbsdk',
-            'stackoverflow:este.js']
-        '@angular/elements':
-          'select the correct mappings in this list ': ['stackoverflow:angular-forms',
-            'stackoverflow:ngdoc', 'stackoverflow:angular8', 'stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular-i18n', 'stackoverflow:angular2-aot',
-            'stackoverflow:zone', 'stackoverflow:property-binding', 'stackoverflow:angularjs-scope',
-            'stackoverflow:angular', 'stackoverflow:angularjs', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:ng-animate', 'stackoverflow:angular9', 'stackoverflow:batarang',
-            'stackoverflow:angular-new-router', 'stackoverflow:angular4-forms', 'stackoverflow:angular-cli-v6',
-            'stackoverflow:angular7', 'stackoverflow:angularfire2', 'stackoverflow:angular10']
-        '@angular/service-worker':
-          'select the correct mappings in this list ': ['stackoverflow:angular-forms',
-            'stackoverflow:ngdoc', 'stackoverflow:angular8', 'stackoverflow:angular-cli',
-            'stackoverflow:angular-cli-v7', 'stackoverflow:angular-i18n', 'stackoverflow:angular2-aot',
-            'stackoverflow:zone', 'stackoverflow:property-binding', 'stackoverflow:angularjs-scope',
-            'stackoverflow:angular', 'stackoverflow:angularjs', 'stackoverflow:angular-cli-v8',
-            'stackoverflow:ng-animate', 'stackoverflow:angular9', 'stackoverflow:batarang',
-            'stackoverflow:angular-new-router', 'stackoverflow:angular4-forms', 'stackoverflow:angular-cli-v6',
-            'stackoverflow:angular7', 'stackoverflow:angularfire2', 'stackoverflow:angular10']
-        puppeteer-core:
-          'select the correct mappings in this list ': ['stackoverflow:puppeteer',
-            'stackoverflow:laravel-sitemap']
-        '@tailwindcss/postcss':
-          'select the correct mappings in this list ': ['stackoverflow:tailwind-css',
-            'stackoverflow:tailwind-css-3', 'stackoverflow:tailwind-css-4']
-        '@storybook/core':
-          'select the correct mappings in this list ': ['stackoverflow:storyshots',
-            'stackoverflow:storybook']
-        '@fortawesome/free-regular-svg-icons':
-          'select the correct mappings in this list ': ['stackoverflow:font-awesome-5',
-            'stackoverflow:font-awesome']
-        '@fortawesome/free-brands-svg-icons':
-          'select the correct mappings in this list ': ['stackoverflow:font-awesome-5',
-            'stackoverflow:font-awesome']
-        angular-mocks:
-          'select the correct mappings in this list ': ['stackoverflow:ngdoc', 'stackoverflow:angularjs-scope',
-            'stackoverflow:angularjs', 'stackoverflow:ng-animate']
-        '@nuxt/schema':
-          'select the correct mappings in this list ': ['stackoverflow:nuxtjs2', 'stackoverflow:nuxt.js']
-        '@babel/runtime-corejs2':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-react-jsx-source':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-decorators':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-export-default-from':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
+        jest-changed-files: []
+        jest-docblock: []
+        '@babel/plugin-transform-flow-strip-types': []
+        '@babel/plugin-transform-shorthand-properties': []
+        '@babel/plugin-transform-react-constant-elements': []
+        '@babel/code-frame': []
+        '@babel/eslint-plugin': []
+        '@babel/plugin-syntax-import-assertions': []
+        '@babel/plugin-transform-property-literals': []
+        '@babel/plugin-transform-for-of': []
+        '@babel/plugin-transform-react-display-name': []
+        '@babel/compat-data': []
+        '@babel/plugin-syntax-flow': []
+        '@babel/plugin-transform-member-expression-literals': []
+        '@babel/plugin-transform-class-properties': []
+        babel-plugin-transform-es2015-typeof-symbol: []
+        babel-plugin-syntax-async-functions: []
+        babel-plugin-transform-es2015-spread: []
+        babel-plugin-transform-es2015-modules-umd: []
+        babel-plugin-transform-es2015-literals: []
+        babel-plugin-transform-es2015-classes: []
+        babel-plugin-syntax-trailing-function-commas: []
+        babel-plugin-transform-es2015-parameters: []
+        babel-plugin-transform-es2015-modules-systemjs: []
+        babel-plugin-transform-es2015-modules-amd: []
+        babel-plugin-transform-es2015-function-name: []
+        babel-plugin-transform-es2015-for-of: []
+        babel-plugin-transform-es2015-destructuring: []
+        babel-plugin-transform-es2015-computed-properties: []
+        babel-plugin-transform-exponentiation-operator: []
+        '@babel/plugin-syntax-class-properties': []
+        babel-plugin-transform-es2015-template-literals: []
+        babel-plugin-transform-es2015-sticky-regex: []
+        babel-plugin-transform-es2015-shorthand-properties: []
+        babel-plugin-transform-es2015-object-super: []
+        '@babel/plugin-syntax-object-rest-spread': []
+        babel-plugin-check-es2015-constants: []
+        babel-plugin-transform-strict-mode: []
+        babel-plugin-transform-es2015-block-scoping: []
+        babel-plugin-transform-es2015-block-scoped-functions: []
+        babel-plugin-transform-es2015-arrow-functions: []
+        babylon: ['stackoverflow:babylonjs']
+        babel-plugin-syntax-object-rest-spread: []
+        '@angular-devkit/core': []
+        '@angular/cli': ['stackoverflow:angular-cli']
+        '@angular-devkit/schematics': []
+        '@angular-devkit/build-angular': []
+        ember-source: ['stackoverflow:ember.js']
+        '@sveltejs/package': []
+        '@sveltejs/kit': ['stackoverflow:sveltekit']
+        use-subscription: []
+        react-reconciler: []
+        react-devtools-core: ['stackoverflow:react-devtools']
+        react-addons-pure-render-mixin: []
+        react-addons-shallow-compare: []
+        create-react-class: []
+        '@react-native/eslint': []
+        '@angular/elements': ['stackoverflow:angular-elements']
+        '@angular/service-worker': ['stackoverflow:angular-service-worker']
+        puppeteer-core: ['stackoverflow:puppeteer']
+        '@tailwindcss/postcss': []
+        '@storybook/core': ['stackoverflow:storybook']
+        '@fortawesome/free-regular-svg-icons': []
+        '@fortawesome/free-brands-svg-icons': []
+        angular-mocks: ['stackoverflow:angular-mock']
+        '@nuxt/schema': []
+        '@babel/runtime-corejs2': []
+        '@babel/plugin-transform-react-jsx-source': []
+        '@babel/plugin-syntax-decorators': []
+        '@babel/plugin-syntax-export-default-from': []
         '@babel/standalone':
           'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
             'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-object-rest-spread':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-react-inline-elements':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-private-methods':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-syntax-typescript':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-transform-private-property-in-object':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-unicode-regex:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/preset-stage-2':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-code-frame:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-react-inline-elements:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-react-constant-elements:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-types:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-traverse:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-template:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-decorators:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-syntax-flow:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-react-display-name:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-function-bind:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-helpers:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es2015-duplicate-keys:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/preset-stage-0':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        '@babel/plugin-proposal-class-properties':
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
-        babel-plugin-transform-es3-property-literals:
-          'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
-            'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
+        '@babel/plugin-transform-object-rest-spread': []
+        '@babel/plugin-transform-react-inline-elements': []
+        '@babel/plugin-transform-private-methods': []
+        '@babel/plugin-syntax-typescript': []
+        '@babel/plugin-transform-private-property-in-object': []
+        babel-plugin-transform-es2015-unicode-regex: []
+        '@babel/preset-stage-2': []
+        babel-code-frame: []
+        babel-plugin-transform-react-inline-elements: []
+        babel-plugin-transform-react-constant-elements: []
+        babel-types: []
+        babel-traverse: []
+        babel-template: []
+        babel-plugin-transform-decorators: []
+        babel-plugin-syntax-flow: []
+        babel-plugin-transform-react-display-name: []
+        babel-plugin-transform-function-bind: []
+        babel-helpers: []
+        babel-plugin-transform-es2015-duplicate-keys: []
+        '@babel/preset-stage-0': []
+        '@babel/plugin-proposal-class-properties': []
+        babel-plugin-transform-es3-property-literals: []
         babel-plugin-transform-es3-member-expression-literals:
           'select the correct mappings in this list ': ['stackoverflow:babeljs', 'stackoverflow:babel-jest',
             'stackoverflow:reactql', 'stackoverflow:este.js', 'stackoverflow:isparta']
