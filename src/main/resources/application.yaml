@@ -13,11 +13,15 @@
           to:
             gcp:
               enabled: true
+    indicators:
+      stackexchange:
+        override:
+          # Set to true in dev mode
+          mappings: true
     projects:
       per:
         page: 10
         platform: 1000
-
 camel:
   threadpool:
     pool-size: 5
@@ -29,6 +33,14 @@ quarkus:
       enabled: true
     expression:
       extraction-enabled: false
+  config:
+    locations:
+    # This allows us to use more than one configuration file
+    # which is preciely very useful because the configuration for
+    # libs to stackexchange tags will be rather verbose 
+    # (roughly 600 technologies to remap)
+    # We use properties file because it's way easier to overwrite than YAML
+      - stackexchange.properties
   datasource:
     db-kind: postgresql
     devservices:
@@ -313,11 +325,9 @@ tech-lab-ingester:
             WHERE REPO_OWNER=:owner AND REPO_NAME=:name
             GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
     stackexchange:
-      NPM:
-        "@babel/preset-env": []
-        "@babel/core": []
-        "@babel/runtime": []
-        "@babel/cli": []
+      override:
+        # Set to false in normal mode (because we can't alter the jar there)
+        mappings: false
 
   projects:
     per:

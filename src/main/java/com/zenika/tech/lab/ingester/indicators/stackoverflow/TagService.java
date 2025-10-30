@@ -1,13 +1,19 @@
 package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -15,6 +21,7 @@ import com.zenika.tech.lab.ingester.model.Technology;
 import io.quarkus.logging.Log;
 import io.smallrye.config.SmallRyeConfig;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
@@ -28,7 +35,7 @@ public class TagService {
 	 * This code fragment is defined in another class to make sure we can test it correctly
 	 */
 	@Inject TagDefinitionLoader tagLoader;
-
+	
 	/**
 	 * Check if tag exists locally, and if it is "fresh".
 	 * If not existing, or not fresh, we re-download the associated wiki page
@@ -60,52 +67,45 @@ public class TagService {
 	/**
 	 * Find all tags for given technology across the StackExchange-verse (and associate them to that technology)
 	 * @param technology
+	 * @throws InvalidTagMappingFor when invalid mappings are detected
 	 */
 	@Transactional
 	public void registerTagsFor(Technology technology) {
-		KnownTechnology known = knownTechnologies.findByTechnology(technology)
+		final KnownTechnology known = knownTechnologies.findByTechnology(technology)
 				.orElse(KnownTechnologyBuilder.knownTechnology()
 						.technology(technology)
 						.known(false)
 						.build());
-		Optional<List<Tag>> forcedTags = getTags(technology);
-		forcedTags.ifPresentOrElse(tags -> registerForcedTagsFor(known, technology, tags), 
-				() -> autoRegisterTagsFor(known, technology));
+		Set<Tag> tags = getConfiguredTagsFor(technology)
+				.orElseGet(() -> detectTags(known));
+		persistLinkedTags(known, tags);
 	}
 
-	private void autoRegisterTagsFor(KnownTechnology known, Technology technology) {
+	private Set<Tag> detectTags(KnownTechnology known) {
 		Set<Tag> linkedTags = new LinkedHashSet<Tag>();
-		linkedTags.addAll(tags.findByName(technology.name));
+		linkedTags.addAll(tags.findByName(known.id.technology.name));
 		if(linkedTags.isEmpty()) {
-			linkedTags.addAll(tags.findByExcerptContainingUrl(technology.repositoryUrl));
-			linkedTags.addAll(tags.findByWikiContainingUrl(technology.repositoryUrl));
-			Log.infof("Loading tags of %s by repository url added %s", technology, linkedTags);
+			linkedTags.addAll(tags.findByExcerptContainingUrl(known.id.technology.repositoryUrl));
+			linkedTags.addAll(tags.findByWikiContainingUrl(known.id.technology.repositoryUrl));
+			Log.infof("Loading tags of %s by repository url added %s", known.id.technology, linkedTags);
 		}
 		if(linkedTags.isEmpty()) {
-			linkedTags.addAll(tags.findByExcerptContainingUrl(technology.homepage));
-			linkedTags.addAll(tags.findByWikiContainingUrl(technology.homepage));
-			Log.infof("Loading tags of %s by homepage added %s", technology, linkedTags);
+			linkedTags.addAll(tags.findByExcerptContainingUrl(known.id.technology.homepage));
+			linkedTags.addAll(tags.findByWikiContainingUrl(known.id.technology.homepage));
+			Log.infof("Loading tags of %s by homepage added %s", known.id.technology, linkedTags);
 		}
 		Map<String, List<Tag>> groupedBySite = groupedBySite(linkedTags);
 		boolean valid = groupedBySite.values().stream()
 				.filter(tagList -> tagList.size()>1)
 				.count()==0;
 		if(valid) {
-			persistLinkedTags(known, linkedTags);
+			return linkedTags;
 		} else {
-			String detailedError = groupedBySite.entrySet().stream()
-				.filter(entry -> entry.getValue().size()>1)
-				.map(entry -> String.format("Site %s has %d tags found: %s", entry.getKey(), entry.getValue().size(), entry.getValue()))
-				.collect(Collectors.joining("\n - ", " - ", "\n"));
-			Log.warnf("Found tags for technology %s.\n"
-					+ "They're not coherent :more than one tag per StackExchange site was detected.\n"
-					+ "Invalid sites found are:\n"
-					+ "%s"
-					+ "You'll have to set that by hand in configuration file", linkedTags, technology, detailedError);
+			throw new InvalidTagMappingFor(known, linkedTags);
 		}
 	}
 
-	private Map<String, List<Tag>> groupedBySite(Set<Tag> linkedTags) {
+	public static Map<String, List<Tag>> groupedBySite(Set<Tag> linkedTags) {
 		return linkedTags.stream()
 			.collect(Collectors.groupingBy(tag -> tag.site));
 	}
@@ -116,11 +116,7 @@ public class TagService {
 		knownTechnologies.persist(known);
 	}
 
-	private void registerForcedTagsFor(KnownTechnology known, Technology technology, List<Tag> tags) {
-		persistLinkedTags(known, tags);
-	}
-
-	private Optional<List<Tag>> getTags(Technology technology) {
+	private Optional<Set<Tag>> getConfiguredTagsFor(Technology technology) {
 		String configurationKey = getConfigurationKeyFor(technology);
 		if(configuration.isPropertyPresent(configurationKey)) {
 			List<String> potential = configuration.getIndexedProperties(configurationKey);
@@ -132,12 +128,12 @@ public class TagService {
 					)
 					.filter(Optional::isPresent)
 					.map(Optional::get)
-					.collect(Collectors.toList()));
+					.collect(Collectors.toSet()));
 		}
 		return Optional.empty();
 	}
 
-	private String getConfigurationKeyFor(Technology technology) {
+	public static String getConfigurationKeyFor(Technology technology) {
 		return String.format("%s.%s.%s", 
 				PREFIX, technology.platform, technology.name);
 	}
