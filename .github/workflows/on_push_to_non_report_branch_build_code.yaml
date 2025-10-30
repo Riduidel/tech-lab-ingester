@@ -39,5 +39,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LIBRARIES_IO_TOKEN: ${{ secrets.LIBRARIES_IO_TOKEN }}
-          STACKEXCHANGE_TOKEN: ${secrets.STACKEXCHANGE_TOKEN}
-          GCP_PROJECT_ID: ${secrets.GCP_PROJECT_ID}
+          STACKEXCHANGE_TOKEN: ${{ secrets.STACKEXCHANGE_TOKEN }}
+          GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
