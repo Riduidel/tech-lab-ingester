@@ -30,7 +30,12 @@ jobs:
       - name: List active profiles per project
         run: mvn help:active-profiles
       - name: Build package
-        run: mvn --batch-mode install -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN}
+        run: |
+          mvn --batch-mode install \
+            -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} \
+            -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN} \
+            -Dtech-lab-ingester.stackexchange.api.key=${STACKEXCHANGE_TOKEN} \
+            -Dtech-lab-ingester.bigQuery.projectId=${GCP_PROJECT_ID}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LIBRARIES_IO_TOKEN: ${{ secrets.LIBRARIES_IO_TOKEN }}
