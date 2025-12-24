@@ -78,6 +78,8 @@ quarkus:
       url: https://api.npmjs.org/
     librariesio:
       url: https://libraries.io/api
+    youtube-api:
+      url: https://www.googleapis.com/youtube/v3
     logging:
       body-limit: 1024
       scope: request-response
