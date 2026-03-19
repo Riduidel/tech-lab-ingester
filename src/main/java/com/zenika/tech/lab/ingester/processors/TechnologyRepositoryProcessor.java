@@ -11,11 +11,12 @@ import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators;
 
 import io.quarkus.logging.Log;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
-@Dependent
+@ApplicationScoped
 public class TechnologyRepositoryProcessor {
 	@Inject TechnologyRepository technologies;
 	@Inject IndicatorRepository indicators;

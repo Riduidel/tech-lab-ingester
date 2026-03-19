@@ -1,23 +1,37 @@
 package com.zenika.tech.lab.ingester;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import org.apache.camel.Exchange;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.EndpointConsumerBuilder;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.apache.camel.component.file.FileConstants;
+import org.apache.camel.model.dataformat.YAMLLibrary;
+import org.apache.commons.io.FileUtils;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.yaml.snakeyaml.DumperOptions;
+import org.yaml.snakeyaml.Yaml;
 
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.BadTagMappingsFor;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.TagService;
 import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
 import com.zenika.tech.lab.ingester.librariesio.model.Platform;
 import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
+import com.zenika.tech.lab.ingester.utils.MapUtils;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -29,6 +43,22 @@ public class AddMissingFields extends EndpointRouteBuilder {
 
 	@ConfigProperty(name="rejected-platforms", defaultValue="Bower,Carthage,Alcatraz,SwiftPM,Nimble,PureScript")
 	private List<String> rejectedPlatforms;
+
+	/**
+	 * If this file is not null, it means we're running in dev mode.
+	 * In such a case, we can try to update
+	 */
+	@ConfigProperty(name = TagService.PREFIX+".mapping.folder", defaultValue = "src/main/resources")
+	Path configurationFolder;
+	/*
+	@ConfigProperty(name = TagService.PREFIX+".mapping.merge", defaultValue = "false")
+	boolean mergeBadMappings;
+	@ConfigProperty(name = TagService.PREFIX+".mapping.file", defaultValue = "stackexchange.yaml")
+	String configurationFile;
+	@ConfigProperty(name = TagService.PREFIX+".override.mappings", defaultValue = "false")
+	boolean overrideMappings;
+	*/
+	
 	@RestClient LibrariesIOClient librariesIo;
 
 	TechnologyRepositoryProcessor technologies;
@@ -37,24 +67,26 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
 		this.technologies = technologies;
 	}
+	
+	@Inject TagService tags;
 
 	private Map<String, String> platformMappings;
 	
     @Override
     public void configure() throws Exception {
-    	from(generateStarterEndpoint())
+   	from(generateStarterEndpoint())
     		.routeId(getClass().getSimpleName()+"-1-get-all-technologies")
     		.description("Get all technologies")
 			.log("🔍 Searching for technologies")
 			// Load all technologies
 			// I think it will be necessary to have some kind of batch processing
 			.process(technologies::findAllTechnologies)
-			.log("✅  Found ${body.size} technologies")
+			.log("⏳️ Adding missing elements to ${body.size} technologies")
 			.split(body())
 //				.parallelProcessing()
 				.to(ADD_MISSING_FIELDS)
 				.end()
-			.log("🎉 All indicators computations have been created, now searching them by date")
+			.log("✅ All missing elements have been added")
 	    	;
     	from(ADD_MISSING_FIELDS)
 			.routeId(getClass().getSimpleName()+"-2-add-missing-fields")
@@ -67,12 +99,12 @@ public class AddMissingFields extends EndpointRouteBuilder {
 		return direct(getClass().getSimpleName());
 	}
 
-	private void addPlatform(Exchange exchange1) {
-		Technology body = (Technology) exchange1.getMessage().getBody();
+	private void addPlatform(Exchange exchange) {
+		Technology body = exchange.getMessage().getBody(Technology.class);
 		if(body.platform==null) {
 			Log.infof("🚚 Adding missing platform to %s", body);
 			Technology technology = addPlatform(body);
-			exchange1.getMessage().setBody(technology);
+			exchange.getMessage().setBody(technology);
 		}
 	}
 

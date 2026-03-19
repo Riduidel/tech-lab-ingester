@@ -22,29 +22,10 @@ import java.util.stream.Collectors;
 public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	static final String FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID = ProcessIndicatorComputations.class.getSimpleName()+"-1-fetch-all-indicator-computations";
 	private static final String INDICATOR_ROUTE_HEADER = "route";
-	TechnologyRepositoryProcessor technologies;
-	IndicatorComputationProcessor indicators;
+	@Inject TechnologyRepositoryProcessor technologies;
+	@Inject IndicatorComputationProcessor indicators;
 	
 	@Inject Instance<IndicatorComputer> indicatorComputers;
-
-	private Map<String, IndicatorComputer> indicatorComputerRoutes;
-	
-	@PostConstruct
-	public void construct() {
-		indicatorComputerRoutes = indicatorComputers.stream()
-				.collect(Collectors.toMap(IndicatorComputer::getFromRouteName, Function.identity()))
-				;
-	}
-	
-	@Inject
-	public void setTechnologies(TechnologyRepositoryProcessor technologies) {
-		this.technologies = technologies;
-	}
-	
-	@Inject
-	public void setIndicators(IndicatorComputationProcessor indicators) {
-		this.indicators = indicators;
-	}
 
 	@Override
 	public void configure() throws Exception {

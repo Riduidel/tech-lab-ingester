@@ -11,4 +11,5 @@ public interface Configuration {
 	public static final String CONFIGURATION_PREFIX = PROJECT_NAME+".";
 	public static final String INDICATORS_PREFIX = CONFIGURATION_PREFIX+"indicators.";
 	public static final String EXPORT_PREFIX = CONFIGURATION_PREFIX+"export.";
+	public static final String DATASOURCE = "tech-lab-ingester";
 }

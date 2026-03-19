@@ -1,6 +1,7 @@
 package com.zenika.tech.lab.ingester.model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
@@ -60,7 +61,7 @@ public class Indicator extends PanacheEntityBase {
 					&& Objects.equals(technology, other.technology);
 		}
 	}
-	
+
 	@EmbeddedId
 	public IndicatorId id;
 
@@ -80,5 +81,9 @@ public class Indicator extends PanacheEntityBase {
 		this.id.indicatorName = indicator;
 		this.id.date = d;
 		this.indicatorValue = value;
+	}
+	
+	public Date getDate() {
+		return this.id.date;
 	}
 }
