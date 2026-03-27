@@ -29,8 +29,14 @@ jobs:
           java-version: 21
           cache: 'maven'
       - name: Publish package
-        run: "mvn --batch-mode deploy -Drevision=$VERSION -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN}"
+        run: |
+          mvn --batch-mode deploy \
+            -Dtech-lab-ingester.stackexchange.api.key=${STACKEXCHANGE_TOKEN} \
+            -Dtech-lab-ingester.bigQuery.projectId=${GCP_PROJECT_ID} \
+            -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} \
+            -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN}
         env:
-          VERSION: "${{steps.release_number.outputs.tag_name}}"
+          STACKEXCHANGE_TOKEN: ${{secrets.STACKEXCHANGE_TOKEN}}
+          GCP_PROJECT_ID: ${{secrets.GCP_PROJECT_ID}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LIBRARIES_IO_TOKEN: ${{ secrets.LIBRARIES_IO_TOKEN }}
