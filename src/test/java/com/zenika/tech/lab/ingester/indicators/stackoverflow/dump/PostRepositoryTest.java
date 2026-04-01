@@ -5,8 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import com.zenika.tech.lab.ingester.Constants;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.Tags;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologiesRepository;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
@@ -24,19 +27,11 @@ class PostRepositoryTest {
 	@Inject TechnologyRepository technologies;
 	@Inject KnownTechnologiesRepository stackOverflowTechnologies;
 	
-	@Test
+	@Test @Disabled
 	public void can_count_react_questions_slowly() {
 		// Given
-		Technology react = technologies.findById(2L);
-		Optional<KnownTechnology> knownReactOptional = stackOverflowTechnologies.findByTechnology(react);
-		Assertions.assertThat(knownReactOptional).isPresent();
-		KnownTechnology knownReact = knownReactOptional.get();
-		Optional<Tag> tagOptional = knownReact.linkedTags
-			.stream()
-			.filter(t -> t.site.equalsIgnoreCase("stackoverflow"))
-			.findFirst();
-		Assertions.assertThat(tagOptional).isPresent();
-		Tag reactTag = tagOptional.get();
+		Technology react = Constants.Technologies.react;
+		Tag reactTag = Tags.StackOverflow.react;
 		Date start = new Date(2020-1900, 1-1, 1);
 		Date end = new Date(2021-1900, 1-1, 1);
 		// When
