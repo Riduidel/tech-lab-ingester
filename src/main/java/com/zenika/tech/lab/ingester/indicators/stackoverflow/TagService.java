@@ -161,7 +161,7 @@ public class TagService {
 	}
 
 	private Collection<String> getPlatformTransformedTechnologyNames(KnownTechnology known) {
-		return nameTransformers.getOrDefault(known.getTechnologyPlatform(), new NoopPlatformNameTransformer("any platform"))
+		return nameTransformers.getOrDefault(known.getTechnologyPlatform(), new NoopPlatformNameTransformer(known.getTechnologyPlatform()))
 				.transform(known.getTechnologyName());
 	}
 

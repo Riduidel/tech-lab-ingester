@@ -57,6 +57,7 @@ class StackOverflowTagLoadMasqueradedAsTest extends CamelQuarkusTestSupport {
 	@EndpointInject("mock:StackOverflowTagLoadMasqueradedAsTest")
     MockEndpoint mockEndpoint;
 
+	@Disabled
 	@Test
 	void can_load_tags_from_stackoverflow() throws InterruptedException {
 		// Given

@@ -2,7 +2,6 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -15,13 +14,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import com.zenika.tech.lab.ingester.Constants;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.Tags.StackOverflow;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologyBuilder;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
 import com.zenika.tech.lab.ingester.model.Technology;
 
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.QuarkusTestProfile;
-import io.quarkus.test.junit.TestProfile;
 import jakarta.inject.Inject;
 
 /**

@@ -3,6 +3,7 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 import java.util.Arrays;
 
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.TagBuilder;
 
 public interface Tags {
 	public static interface StackOverflow {
