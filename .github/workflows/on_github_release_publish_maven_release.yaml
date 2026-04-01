@@ -15,6 +15,12 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Write testcontainers configuration file
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: ${{ env.home}}/.testcontainers.properties
+          contents: |
+            testcontainers.reuse.enable=true
       - id: release_number
         name: Get release version number to have it injected into maven
         uses: cardinalby/git-get-release-action@v1
