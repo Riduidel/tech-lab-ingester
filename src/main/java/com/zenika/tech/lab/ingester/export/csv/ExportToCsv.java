@@ -24,15 +24,18 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.Main;
 
+import io.agroal.api.AgroalDataSource;
 import io.quarkus.logging.Log;
 import io.smallrye.config.SmallRyeConfig;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NamedNativeQueries;
 import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.metamodel.EntityType;
+import jakarta.persistence.metamodel.Metamodel;
 
 @ApplicationScoped
 public class ExportToCsv extends EndpointRouteBuilder {
@@ -102,30 +105,31 @@ public class ExportToCsv extends EndpointRouteBuilder {
 		if(globallyEnabled.orElse(false)) {
 			from(direct(export.route()))
 				.id(export.route())
-				.choice()
-				.when(simple("{{"+GLOBALLY_ENABLED+":true}}"))
-					.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
-					.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
-					.setBody(constant(export.readTable()))
-					.to(jdbc("default").outputType("StreamList"))
-					.multicast()
-						.to(direct(export.route()+"-marshal-headers"))
-						.to(direct(export.route()+"-marshal-rows"))
-						.choice()
-						.when(simple("{{"+GCP_ENABLED+":true}}"))
-							.log(LoggingLevel.INFO, "📤 Pushing "+export.table+" to GCP")
-							.pollEnrich(exportPath)
-							.setHeader(GoogleCloudStorageConstants.OBJECT_NAME, constant(FILE_NAME))
-							.to(googleStorage(exportGcpBucket))
-							.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
-						.endChoice()
-						.otherwise()
-							.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" to GCP is disabled due to property "+GCP_ENABLED+" resolving to false")
-						.end()
-					.end()
-					.endChoice()
-				.otherwise()
-					.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" is disabled due to property "+GLOBALLY_ENABLED+" resolving to false")
+//				.choice()
+//				.when(simple("{{"+GLOBALLY_ENABLED+":true}}"))
+//					.process(exchange-> exportBaseFolder.resolve(FILE_NAME).toFile().delete())
+//					.log(LoggingLevel.INFO, "⌛️ Exporting "+export.table+" to CSV")
+//					.setBody(constant(export.readTable()))
+//					.to(String.format("jdbc:%s?outputType=StreamList", Configuration.DATASOURCE))
+//					.multicast()
+//						.to(direct(export.route()+"-marshal-headers"))
+//						.to(direct(export.route()+"-marshal-rows"))
+//						.choice()
+//						.when(simple("{{"+GCP_ENABLED+":true}}"))
+//							.log(LoggingLevel.INFO, "📤 Pushing "+export.table+" to GCP")
+//							.pollEnrich(exportPath)
+//							.setHeader(GoogleCloudStorageConstants.OBJECT_NAME, constant(FILE_NAME))
+//							.to(googleStorage(exportGcpBucket))
+//							.log(LoggingLevel.INFO, "✅ Exported "+export.table+" to CSV (in "+exportBaseFolder+")")
+//						.endChoice()
+//						.otherwise()
+//							.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" to GCP is disabled due to property "+GCP_ENABLED+" resolving to false")
+//						.end()
+//					.end()
+//					.endChoice()
+//				.otherwise()
+//					.log(LoggingLevel.WARN, "⛔ Export of "+export.table+" is disabled due to property "+GLOBALLY_ENABLED+" resolving to false")
+				.log("foo")
 				.end()
 				;
 		} else {
@@ -146,7 +150,9 @@ public class ExportToCsv extends EndpointRouteBuilder {
 
 	private List<CSVTableExport> createTableDefinitions() {
 		String rootPackage = Main.class.getPackageName();
-		Set<EntityType<?>> entities = entityManagerFactory.createEntityManager().getMetamodel().getEntities();
+		EntityManager entityManager = entityManagerFactory.createEntityManager();
+		Metamodel metamodel = entityManager.getMetamodel();
+		Set<EntityType<?>> entities = metamodel.getEntities();
 		return entities.stream()
 			.map(e -> Map.entry(e, e.getBindableJavaType()))
 			.filter(e -> e.getValue().isAnnotationPresent(Table.class) || e.getValue().isAnnotationPresent(jakarta.persistence.Entity.class))
@@ -181,6 +187,8 @@ public class ExportToCsv extends EndpointRouteBuilder {
 		} else {
 			exportRequest = getDefaultExportRequest.get();
 		}
+		// Don't forget to add the default datasource (mostly because Stackoverflow allows access to another one)
+		exportRequest+= "?dataSource=#"+Configuration.DATASOURCE;
 		return new CSVTableExport(TABLE_NAME, exportRequest);
 	}
 

@@ -38,7 +38,7 @@ public class DownloadCountIndicatorComputer extends EndpointRouteBuilder impleme
 
 	@Override
 	public String getFromRouteName() {
-		return getFromRoute().getUri();
+		return getFromRoute().getRawUri();
 	}
 
 	@Override

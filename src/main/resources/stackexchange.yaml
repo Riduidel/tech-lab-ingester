@@ -1,0 +1,6 @@
+tech-lab-ingester:
+  indicators:
+    stackexchange:
+      NPM:
+        '@angular/core':
+          - stackoverflow:angular

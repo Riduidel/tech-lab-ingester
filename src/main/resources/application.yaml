@@ -13,11 +13,15 @@
           to:
             gcp:
               enabled: true
+    indicators:
+      stackexchange:
+        override:
+          # Still not stable enough to use
+          mappings: false
     projects:
       per:
         page: 10
         platform: 1000
-
 camel:
   threadpool:
     pool-size: 5
@@ -29,7 +33,19 @@ quarkus:
       enabled: true
     expression:
       extraction-enabled: false
+  config:
+    locations:
+    # This allows us to use more than one configuration file
+    # which is preciely very useful because the configuration for
+    # libs to stackexchange tags will be rather verbose 
+      - stackexchange.yaml
   datasource:
+    stackoverflow:
+      db-kind: sqlite
+      jdbc:
+        url: jdbc:sqlite:/home/nicolas-delsaux/Téléchargements/stackoverflow.com.sqlite
+        min-size: 1
+        acquisition-timeout: 99999999
     db-kind: postgresql
     devservices:
       enabled: true
@@ -50,8 +66,18 @@ quarkus:
   hawtio:
     authenticationEnabled: false
   hibernate-orm:
+    # We use one default datasource (PostgreSQL)
     database:
       generation: update
+    packages: |
+      com.zenika.tech.lab.ingester.model,
+      com.zenika.tech.lab.ingester.indicators.github.model,
+      com.zenika.tech.lab.ingester.indicators.stackoverflow.model,
+
+    # And one non default datasource (SQLite)
+    stackoverflow:
+      datasource: stackoverflow
+      packages: com.zenika.tech.lab.ingester.indicators.stackoverflow.dump
   http:
     port: 9000
   log:
@@ -73,11 +99,21 @@ quarkus:
           - period: 1m
             permitted-uses: 60
             shared: true
+      stackexchange:
+        limits:
+          - period: 1s
+            permitted-uses: 30
+            shared: true
+          - period: 1s
+            permitted-uses: 30
+            shared: true
   rest-client:
     npmjs-api:
       url: https://api.npmjs.org/
     librariesio:
       url: https://libraries.io/api
+    stackexchange:
+      url: https://api.stackexchange.com/
     logging:
       body-limit: 1024
       scope: request-response
@@ -302,7 +338,24 @@ tech-lab-ingester:
               GITHUB_FORKS
             WHERE REPO_OWNER=:owner AND REPO_NAME=:name
             GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
-
+    stackexchange:
+      override:
+        # Set to false in normal mode (because we can't alter the jar there)
+        mappings: false
+      questions:
+      # Read the questions between the two given dates (dates are given to avoid being slow too often)
+        sql: |
+          select 
+            STRFTIME('%Y', p.CreationDate ) as creation_year, 
+            STRFTIME('%m', p.CreationDate ) as creation_month, 
+            COUNT(*) as questions_per_month
+          from Posts p
+          where p.PostTypeId=1
+          and p.Tags like :tag
+          and p.CreationDate between :start and :end
+          group by creation_year, creation_month
+          order by creation_year, creation_month
+          ;
   projects:
     per:
       page: 10

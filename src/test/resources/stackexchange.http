@@ -1,0 +1,26 @@
+@key = {{STACKEXCHANGE_KEY}}
+@site = scifi
+@tag_filter = !6N4UX.)7jZzX1
+@wiki_filter = !nNPvSNMavg
+
+@test_tag = "story-identification"
+
+### Requête pour récupérer le nombre de tags
+GET https://api.stackexchange.com/2.3/tags?site={{site}}&filter=total
+key: {{key}}
+
+
+### Requête pour récupérer une page de tags
+### ATTENTION: les pages démarrent à 1!
+GET https://api.stackexchange.com/2.3/tags?site={{site}}&page=1&pagesize=100
+key: {{key}}
+
+### Requête pour récupérer une page de tags avec plus d'infos
+### ATTENTION: les pages démarrent à 1!
+GET https://api.stackexchange.com/2.3/tags?site={{site}}&page=1&pagesize=100&filter={{tag_filter}}
+key: {{key}}
+
+### Requête pour récupérer une page de wikis de tags avec plus d'infos
+### ATTENTION: les pages démarrent à 1!
+GET https://api.stackexchange.com/2.3/tags/{{test_tag}}/wikis?site={{site}}&page=1&pagesize=100&filter={{wiki_filter}}
+key: {{key}}

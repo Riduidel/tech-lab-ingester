@@ -11,19 +11,17 @@ import java.util.TreeMap;
 
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators.IndicatorDataPoint;
 
+import io.quarkus.hibernate.orm.PersistenceUnit;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class IndicatorRepository  implements PanacheRepository<Indicator> {
-	private final EntityManager entityManager;
-
-	public IndicatorRepository(EntityManager entityManager) {
-		this.entityManager = entityManager;
-	}
+	@Inject EntityManager entityManager;
 
 	@Transactional
 	public void saveIndicator(Technology technology, String indicatorIdentifier, String value) {

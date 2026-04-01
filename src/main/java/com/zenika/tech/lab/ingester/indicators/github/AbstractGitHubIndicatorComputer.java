@@ -123,7 +123,7 @@ public abstract class AbstractGitHubIndicatorComputer<T, V extends PageableHisto
 
 	@Override
 	public String getFromRouteName() {
-		return getFromRoute().getUri();
+		return getFromRoute().getRawUri();
 	}
 
 	private void computeGitHubIndicators(Exchange exchange) throws IOException {

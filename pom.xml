@@ -13,18 +13,20 @@
 		GitHub Actions (see on_release_build_version.yaml) -->
         <revision>local-SNAPSHOT</revision>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
-        <maven.compiler.release>21</maven.compiler.release>
+        <java.version>21</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-        <quarkus.platform.version>3.17.5</quarkus.platform.version>
-        <camel.version>4.9.0</camel.version>
+        <quarkus.platform.version>3.30.5</quarkus.platform.version>
+        <camel.version>4.16.0</camel.version>
         <skipITs>true</skipITs>
         <surefire-plugin.version>3.5.0</surefire-plugin.version>
         <!-- Jacoco auto-increasing tests configuration -->
         <jacoco.version>0.8.12</jacoco.version>
-        <jacoco.covered.instructions.target.percentage>0.08</jacoco.covered.instructions.target.percentage>
+        <jacoco.covered.instructions.target.percentage>0.19</jacoco.covered.instructions.target.percentage>
+        <chappie-extension.version>1.5.0</chappie-extension.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -49,13 +51,24 @@
         <dependency>
             <groupId>io.hawt</groupId>
             <artifactId>hawtio-quarkus</artifactId>
-            <version>4.3.0</version>
+            <version>4.6.2</version>
         </dependency>
         <dependency>
             <groupId>io.quarkiverse.bucket4j</groupId>
             <artifactId>quarkus-bucket4j</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.7</version>
         </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.jdbc</groupId>
+            <artifactId>quarkus-jdbc-sqlite</artifactId>
+            <version>3.0.11</version>
+        </dependency>
+        <!--        <dependency>
+            <groupId>io.quarkiverse.chappie</groupId>
+            <artifactId>quarkus-chappie</artifactId>
+            <version>${chappie-extension.version}</version>
+        </dependency>
+-->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
@@ -104,7 +117,7 @@
         <dependency>
             <groupId>io.smallrye</groupId>
             <artifactId>smallrye-graphql-client-generator</artifactId>
-            <version>2.12.1</version>
+            <version>2.16.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.camel</groupId>
@@ -117,12 +130,13 @@
             <version>${camel.version}</version>
         </dependency>
 
-        <dependency>
+        <!--        <dependency>
             <groupId>org.apache.camel</groupId>
             <artifactId>camel-parquet-avro</artifactId>
             <version>${camel.version}</version>
-            <!-- use the same version as your Camel core version -->
+             use the same version as your Camel core version 
         </dependency>
+-->
         <dependency>
             <groupId>org.apache.camel.quarkus</groupId>
             <artifactId>camel-quarkus-bean</artifactId>
@@ -173,6 +187,18 @@
         </dependency>
         <dependency>
             <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-quartz</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-seda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
+            <artifactId>camel-quarkus-snakeyaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.quarkus</groupId>
             <artifactId>camel-quarkus-sql</artifactId>
         </dependency>
         <dependency>
@@ -191,10 +217,15 @@
 			<scope>provided</scope>
 		</dependency>
 -->
+
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.17.0</version>
         </dependency>
         <!--		<dependency>
 			<groupId>io.github.ncasaux</groupId>
@@ -205,7 +236,7 @@
         <dependency>
             <groupId>cc.jilt</groupId>
             <artifactId>jilt</artifactId>
-            <version>1.8.3</version>
+            <version>1.9</version>
             <scope>provided</scope>
             <!-- Jilt is not needed at runtime -->
         </dependency>
@@ -255,6 +286,8 @@
                 <extensions>true</extensions>
                 <configuration>
                     <systemProperties>
+                        <api.version>1.44</api.version>
+                        <tech-lab-ingester.stackexchange.api.key>${tech-lab-ingester.stackexchange.api.key}</tech-lab-ingester.stackexchange.api.key>
                         <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
                         <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
                     </systemProperties>
@@ -285,10 +318,10 @@
                                 <requireJavaVersion>
                                     <version>21</version>
                                 </requireJavaVersion>
-                                <!-- <requireProperty>
-									<property>tech-lab-ingester.stackexchange.api.key</property>
-									<message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
-								</requireProperty> -->
+                                <requireProperty>
+                                    <property>tech-lab-ingester.stackexchange.api.key</property>
+                                    <message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
+                                </requireProperty>
                                 <requireProperty>
                                     <property>tech-lab-ingester.libraries.io.token</property>
                                     <message><![CDATA[tech-lab-ingester.libraries.io.token must be specified.]]></message>
@@ -297,10 +330,10 @@
                                     <property>tech-lab-ingester.github.token</property>
                                     <message><![CDATA[tech-lab-ingester.github.token must be specified.]]></message>
                                 </requireProperty>
-                                <!-- <requireProperty>
-									<property>tech-lab-ingester.bigQuery.projectId</property>
-									<message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
-								</requireProperty> -->
+                                <requireProperty>
+                                    <property>tech-lab-ingester.bigQuery.projectId</property>
+                                    <message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
+                                </requireProperty>
                             </rules>
                         </configuration>
                     </execution>
@@ -312,6 +345,11 @@
                 <version>${jacoco.version}</version>
                 <configuration>
                     <excludes>
+                        <exclude>**/librariesio/model/*</exclude>
+                        <exclude>**/ingester/model/*</exclude>
+                        <exclude>**/github/model/*</exclude>
+                        <exclude>**/stackoverflow/model/*</exclude>
+                        <!-- Standard set of exclusions-->
                         <exclude>**/annotations/*</exclude>
                         <exclude>**/enums/*</exclude>
                         <exclude>**/exceptions/*</exclude>
@@ -366,6 +404,14 @@
                 <version>${compiler-plugin.version}</version>
                 <configuration>
                     <parameters>true</parameters>
+                    <!-- See https://maven.apache.org/plugins/maven-compiler-plugin-4.x/examples/annotation-processor.html -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>cc.jilt</groupId>
+                            <artifactId>jilt</artifactId>
+                            <version>1.9</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <plugin>
@@ -373,9 +419,12 @@
                 <version>${surefire-plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
+                        <api.version>1.44</api.version>
                         <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                         <maven.home>${maven.home}</maven.home>
                         <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+                        <tech-lab-ingester.stackexchange.api.key>${tech-lab-ingester.stackexchange.api.key}</tech-lab-ingester.stackexchange.api.key>
+                        <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -496,7 +545,7 @@
                             <dependency>
                                 <groupId>org.jsoup</groupId>
                                 <artifactId>jsoup</artifactId>
-                                <version>1.12.2</version>
+                                <version>1.22.1</version>
                             </dependency>
                         </dependencies>
                         <executions>
