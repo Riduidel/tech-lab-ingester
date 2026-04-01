@@ -16,7 +16,7 @@ jobs:
       - name: Write testcontainers configuration file
         uses: DamianReeves/write-file-action@master
         with:
-          path: ${{ env.home}}/.testcontainers.properties
+          path: /home/runner/.testcontainers.properties
           write-mode: overwrite
           contents: |
             testcontainers.reuse.enable=true
