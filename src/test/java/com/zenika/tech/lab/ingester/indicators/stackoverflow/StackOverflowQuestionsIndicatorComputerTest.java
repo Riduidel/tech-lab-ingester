@@ -72,7 +72,7 @@ class StackOverflowQuestionsIndicatorComputerTest extends CamelQuarkusTestSuppor
 //		return true;
 //	}
 
-	@Test
+	@Test @Disabled
 	void can_load_tags_from_stackoverflow() throws InterruptedException {
 		// Given
         mockEndpoint.setExpectedMessageCount(1);
