@@ -19,6 +19,7 @@ jobs:
         uses: DamianReeves/write-file-action@master
         with:
           path: ${{ env.home}}/.testcontainers.properties
+          write-mode: overwrite
           contents: |
             testcontainers.reuse.enable=true
       - id: release_number
