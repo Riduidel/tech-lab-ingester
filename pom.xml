@@ -25,7 +25,7 @@
         <surefire-plugin.version>3.5.0</surefire-plugin.version>
         <!-- Jacoco auto-increasing tests configuration -->
         <jacoco.version>0.8.12</jacoco.version>
-        <jacoco.covered.instructions.target.percentage>0.15</jacoco.covered.instructions.target.percentage>
+        <jacoco.covered.instructions.target.percentage>0.19</jacoco.covered.instructions.target.percentage>
         <chappie-extension.version>1.5.0</chappie-extension.version>
     </properties>
     <dependencyManagement>
@@ -345,6 +345,11 @@
                 <version>${jacoco.version}</version>
                 <configuration>
                     <excludes>
+                        <exclude>**/librariesio/model/*</exclude>
+                        <exclude>**/ingester/model/*</exclude>
+                        <exclude>**/github/model/*</exclude>
+                        <exclude>**/stackoverflow/model/*</exclude>
+                        <!-- Standard set of exclusions-->
                         <exclude>**/annotations/*</exclude>
                         <exclude>**/enums/*</exclude>
                         <exclude>**/exceptions/*</exclude>
