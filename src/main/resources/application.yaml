@@ -148,6 +148,16 @@ tech-lab-ingester:
       
   indicators:
     computations:
+      findAllPriorized:
+        sql: |
+          SELECT * from indicator_computation ic 
+          ORDER BY
+            CASE
+              WHEN ic.technology_id in :priorized then 0
+              WHEN ic.technology_id not in :priorized then 1
+            END,
+            ic.indicator_date asc
+            ;
       # The "interesting" technologies are the ones for which we want indicators to be computed first
       interesting:
         technologies:
