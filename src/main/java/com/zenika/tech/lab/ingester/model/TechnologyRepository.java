@@ -37,4 +37,19 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		
 	}
 
+	public Technology findOrCreate(Technology source) {
+		Technology returned = null;
+		// First find the reference url
+		if(source.packageManagerUrl != null) {
+			returned = find("packageManagerUrl", source.packageManagerUrl).firstResult();
+			if(returned!=null) {
+				return returned;
+			}
+		}
+		// If not found, create it and persist it immediatly
+		returned = source;
+		persist(returned);
+		return returned;
+	}
+
 }

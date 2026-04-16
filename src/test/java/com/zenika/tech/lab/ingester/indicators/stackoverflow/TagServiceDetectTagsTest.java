@@ -1,23 +1,27 @@
 package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
+import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import com.zenika.tech.lab.ingester.Constants;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.Tags.StackOverflow;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.api.entities.TagDefinition;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologyBuilder;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
 import com.zenika.tech.lab.ingester.model.Technology;
+import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 
 import io.quarkus.test.TestTransaction;
 import io.quarkus.test.junit.QuarkusTest;
@@ -58,6 +62,8 @@ where sttt.technology_id is null
 @QuarkusTest
 class TagServiceDetectTagsTest {
 
+	@Inject TechnologyRepository technologies;
+	
 	@Inject TagService tested;
 	
 	public static Stream<Arguments> can_detect_tags_for_technology() {
@@ -99,6 +105,13 @@ class TagServiceDetectTagsTest {
 	@TestTransaction
 	void can_detect_tags_for_technology(Technology source, List<Tag> expected) {
 		// Given
+		// We may have case where nothing exists in DB (typically CI)
+		// In such a case, we have to register both technology and tags
+		source = technologies.findOrCreate(source);
+		expected = expected.stream()
+			.map(t -> new TagDefinition(t.name, 1, false, Collections.emptyList(), false, false, LocalDate.now()))
+			.map(t -> tested.maybePersist("stackoverflow", t))
+			.collect(Collectors.toList());
 		KnownTechnology known = KnownTechnologyBuilder.knownTechnology()
 				.known(false)
 				.technology(source)
@@ -131,21 +144,27 @@ class TagServiceDetectTagsTest {
 	@MethodSource
 	@TestTransaction
 	void can_register_tags_for_technology(Technology source, List<Tag> expected) {
+		// Given
+		// We may have case where nothing exists in DB (typically CI)
+		// In such a case, we have to register both technology and tags
+		source = technologies.findOrCreate(source);
+		expected = expected.stream()
+			.map(t -> new TagDefinition(t.name, 1, false, Collections.emptyList(), false, false, LocalDate.now()))
+			.map(t -> tested.maybePersist("stackoverflow", t))
+			.collect(Collectors.toList());
 		// When
 		tested.registerTagsFor(source);
 		// Then
-		SoftAssertions.assertSoftly(assertions -> {
-			assertions.assertThat(tested.isKnownTechnology(source))
-				.describedAs("Technology is known")
-				.isTrue();
-			assertions.assertThat(tested.hasTagsFor(source))
-				.describedAs("There are tags linked to that technology")
-				.isTrue();
-			Set<Tag> found = tested.getTagsFor(source);
-			Assertions.assertThat(found)
-				.usingElementComparatorOnFields("site", "name")
-				.containsAll(expected);
-		});
+		Assertions.assertThat(tested.isKnownTechnology(source))
+			.describedAs("Technology is known")
+			.isTrue();
+		Assertions.assertThat(tested.hasTagsFor(source))
+			.describedAs("There are tags linked to that technology")
+			.isTrue();
+		Set<Tag> found = tested.getTagsFor(source);
+		Assertions.assertThat(found)
+			.usingElementComparatorOnFields("site", "name")
+			.containsAll(expected);
 	}
 
 }
