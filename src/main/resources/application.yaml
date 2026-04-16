@@ -150,13 +150,20 @@ tech-lab-ingester:
     computations:
       findAllPriorized:
         sql: |
-          select *
-            from indicator_computation ic
-            order by 
-            ic.technology_id in :priorized desc,
-            ic.status desc,
-            ic.indicator_date  asc,
-            ic.technology_id asc;
+          SELECT * from indicator_computation ic 
+          ORDER BY
+            CASE
+              WHEN ic.technology_id in :priorized then 0
+              WHEN ic.technology_id not in :priorized then 1
+            END,
+            ic.indicator_date asc
+            ;
+      # The "interesting" technologies are the ones for which we want indicators to be computed first
+      interesting:
+        technologies:
+          - 2 # React
+          - 17 # Vue
+          - 2410 # Angular
     github:
       stars:
         graphql:
