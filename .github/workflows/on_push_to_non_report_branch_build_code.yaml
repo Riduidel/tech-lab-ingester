@@ -13,6 +13,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Write testcontainers configuration file
+        uses: DamianReeves/write-file-action@master
+        with:
+          path: /home/runner/.testcontainers.properties
+          write-mode: overwrite
+          contents: |
+            testcontainers.reuse.enable=true
       - uses: actions/checkout@v4
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v3'
@@ -30,7 +37,14 @@ jobs:
       - name: List active profiles per project
         run: mvn help:active-profiles
       - name: Build package
-        run: mvn --batch-mode install -Dtech-trends.github.token=${GITHUB_TOKEN} -Dtech-trends.libraries.io.token=${LIBRARIES_IO_TOKEN}
+        run: |
+          mvn --batch-mode install \
+            -Dtech-lab-ingester.stackexchange.api.key=${STACKEXCHANGE_TOKEN} \
+            -Dtech-lab-ingester.bigQuery.projectId=${GCP_PROJECT_ID} \
+            -Dtech-lab-ingester.github.token=${GITHUB_TOKEN} \
+            -Dtech-lab-ingester.libraries.io.token=${LIBRARIES_IO_TOKEN}
         env:
+          STACKEXCHANGE_TOKEN: ${{secrets.STACKEXCHANGE_TOKEN}}
+          GCP_PROJECT_ID: ${{secrets.GCP_PROJECT_ID}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           LIBRARIES_IO_TOKEN: ${{ secrets.LIBRARIES_IO_TOKEN }}

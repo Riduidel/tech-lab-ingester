@@ -1,0 +1,80 @@
+package com.zenika.tech.lab.ingester.model;
+
+import java.util.Objects;
+
+import org.jilt.Builder;
+
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedNativeQueries;
+import jakarta.persistence.NamedNativeQuery;
+
+/**
+ * Class containing stored informations of technologies.
+ */
+@Entity
+@NamedNativeQueries({
+	@NamedNativeQuery(name="TECHNOLOGY.CSV.EXPORT", query="""
+select id,
+trim(regexp_replace(description, '[\n\r]+', ' ', 'g')) as description,
+trim(regexp_replace(homepage, '[\n\r]+', ' ', 'g')) as homepage,
+trim(regexp_replace(name, '[\n\r]+', ' ', 'g')) as name,
+trim(regexp_replace(packagemanagerurl, '[\n\r]+', ' ', 'g')) as packagemanagerurl,
+trim(regexp_replace(repositoryurl, '[\n\r]+', ' ', 'g')) as repositoryurl
+from technology
+			""")
+})
+@Builder
+public class Technology extends PanacheEntityBase {
+	public String name;
+	@Column(columnDefinition = "text")
+	public String description;
+
+	/**
+	 * The homepage is usually the technology vanity url
+	 */
+	public String homepage;
+
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TECHNOLOGY_ID_SEQ")
+	public Long id;
+	public String packageManagerUrl;
+	public String repositoryUrl;
+	public String platform;
+	
+	public Technology() {}
+	public Technology(String name, String description, String homepage, Long id, String packageManagerUrl,
+			String repositoryUrl, String platform) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.homepage = homepage;
+		this.id = id;
+		this.packageManagerUrl = packageManagerUrl;
+		this.repositoryUrl = repositoryUrl;
+		this.platform = platform;
+	}
+	@Override
+	public String toString() {
+		return "Technology [" + (name != null ? "name=" + name + ", " : "")
+				+ (homepage != null ? "homepage=" + homepage : "") + "]";
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Technology other = (Technology) obj;
+		return Objects.equals(id, other.id);
+	}
+}
