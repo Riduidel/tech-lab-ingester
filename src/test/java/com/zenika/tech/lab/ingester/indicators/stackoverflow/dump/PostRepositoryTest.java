@@ -27,7 +27,7 @@ class PostRepositoryTest {
 	@Inject TechnologyRepository technologies;
 	@Inject KnownTechnologiesRepository stackOverflowTechnologies;
 	
-	@Test @Disabled
+	@Test
 	public void can_count_react_questions_slowly() {
 		// Given
 		Technology react = Constants.Technologies.react;
