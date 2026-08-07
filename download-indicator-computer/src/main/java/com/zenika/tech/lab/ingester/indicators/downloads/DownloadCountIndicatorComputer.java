@@ -2,20 +2,19 @@ package com.zenika.tech.lab.ingester.indicators.downloads;
 
 import java.util.Map;
 import java.util.function.Function;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.model.Technology;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
-import com.zenika.tech.lab.ingester.model.Technology;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
+import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 
 @ApplicationScoped
 public class DownloadCountIndicatorComputer extends EndpointRouteBuilder implements IndicatorComputer {

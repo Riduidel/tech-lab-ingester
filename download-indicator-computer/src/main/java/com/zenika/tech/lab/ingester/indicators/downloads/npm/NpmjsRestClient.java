@@ -1,13 +1,11 @@
 package com.zenika.tech.lab.ingester.indicators.downloads.npm;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-import com.zenika.tech.lab.ingester.model.Technology;
+
 
 import io.quarkus.logging.Log;
 import jakarta.ws.rs.GET;
