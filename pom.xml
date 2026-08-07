@@ -6,7 +6,19 @@
     <groupId>com.zenika.tech-lab</groupId>
     <artifactId>tech-lab-ingester</artifactId>
     <version>${revision}</version>
-
+    <packaging>pom</packaging>
+    <modules>
+        <module>main</module>
+        <module>librarires-reader</module>
+        <module>indicator-computations-interface</module>
+        <module>github-indicator-computer</module>
+        <module>download-indicator-computer</module>
+        <module>stackexchange-indicator-computer</module>
+        <module>indicator-computations-orchestrator</module>
+        <module>exporter</module>
+        <module>utilities</module>
+        <module>common</module>
+    </modules>
     <properties>
         <quarkus.package.jar.type>uber-jar</quarkus.package.jar.type>
         <!-- This version number makes no sense, cause it has to be changed in
@@ -48,6 +60,7 @@
     </dependencyManagement>
 
     <dependencies>
+
         <dependency>
             <groupId>io.hawt</groupId>
             <artifactId>hawtio-quarkus</artifactId>
@@ -271,7 +284,7 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.27.3</version>
+            <version>3.27.7</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
