@@ -19,7 +19,6 @@ import com.zenika.tech.lab.ingester.model.IndicatorComputationBuilder;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
 import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.TechnologyBuilder;
-import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.junit.QuarkusMock;

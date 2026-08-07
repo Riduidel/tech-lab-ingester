@@ -2,20 +2,16 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow.dump;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.zenika.tech.lab.ingester.Constants;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.Tags;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologiesRepository;
-import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;

@@ -3,13 +3,13 @@ package com.zenika.tech.lab.ingester;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.processors.IndicatorComputationProcessor;
+import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
+import indicators.IndicatorComputer;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.processors.IndicatorComputationProcessor;
-import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;

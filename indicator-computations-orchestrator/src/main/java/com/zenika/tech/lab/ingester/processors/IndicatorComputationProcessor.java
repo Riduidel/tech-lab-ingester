@@ -1,22 +1,14 @@
 package com.zenika.tech.lab.ingester.processors;
 
 import java.util.Date;
-import java.util.List;
 
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation.IndicatorComputationStatus;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
 import com.zenika.tech.lab.ingester.model.Technology;
 
-import io.quarkus.panache.common.Sort;
-import io.quarkus.panache.common.Sort.Direction;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
-import jakarta.inject.Named;
-import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 
 @Dependent

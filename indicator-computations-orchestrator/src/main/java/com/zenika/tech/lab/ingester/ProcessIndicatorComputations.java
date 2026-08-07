@@ -1,11 +1,9 @@
 package com.zenika.tech.lab.ingester;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.processors.IndicatorComputationProcessor;
 import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
-import io.quarkus.logging.Log;
-import jakarta.annotation.PostConstruct;
+import indicators.IndicatorComputer;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Instance;
 import jakarta.inject.Inject;
@@ -14,16 +12,14 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-
 @ApplicationScoped
 public class ProcessIndicatorComputations extends EndpointRouteBuilder  {
 	static final String FETCH_ALL_INDICATOR_COMPUTATIONS_ROUTE_ID = ProcessIndicatorComputations.class.getSimpleName()+"-1-fetch-all-indicator-computations";
 	private static final String INDICATOR_ROUTE_HEADER = "route";
-	@Inject TechnologyRepositoryProcessor technologies;
-	@Inject IndicatorComputationProcessor indicators;
+	@Inject
+    TechnologyRepositoryProcessor technologies;
+	@Inject
+    IndicatorComputationProcessor indicators;
 	
 	@Inject Instance<IndicatorComputer> indicatorComputers;
 

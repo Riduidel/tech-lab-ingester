@@ -11,13 +11,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.model.IndicatorComputation;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationBuilder;
 import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
-import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.TechnologyBuilder;
-import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.enterprise.inject.Instance;
