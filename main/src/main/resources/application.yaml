@@ -1,0 +1,369 @@
+'%dev':
+  tech-lab-ingester:
+    export:
+      INDICATOR:
+        csv:
+          enabled: true
+          to:
+            gcp:
+              enabled: true
+      TECHNOLOGY:
+        csv:
+          enabled: true
+          to:
+            gcp:
+              enabled: true
+    indicators:
+      stackexchange:
+        override:
+          # Still not stable enough to use
+          mappings: false
+    projects:
+      per:
+        page: 10
+        platform: 1000
+camel:
+  threadpool:
+    pool-size: 5
+    max-pool-size: 10
+    max-queue-size: -1
+quarkus:
+  camel:
+    routes-discovery:
+      enabled: true
+    expression:
+      extraction-enabled: false
+  config:
+    locations:
+    # This allows us to use more than one configuration file
+    # which is preciely very useful because the configuration for
+    # libs to stackexchange tags will be rather verbose 
+      - stackexchange.yaml
+  datasource:
+    stackoverflow:
+      db-kind: sqlite
+      jdbc:
+        url: jdbc:sqlite:C:/Users/Serpil/Desktop/sqlite/stackoverflow.com.sqlite1
+        min-size: 1
+        acquisition-timeout: 99999999
+    db-kind: postgresql
+    devservices:
+      enabled: true
+      port: 15432
+      volumes:
+        "data/database/postgresql": /var/lib/postgresql/data
+      reuse: true
+      db-name: tech-lab-ingester
+      username: tech-lab-ingester
+      password: tech-lab-ingester
+    health:
+      enabled: true
+    jdbc:
+      max-size: 100
+  flyway:
+    migrate-at-start: true
+    baseline-on-migrate: true
+  hawtio:
+    authenticationEnabled: false
+  hibernate-orm:
+    # We use one default datasource (PostgreSQL)
+    database:
+      generation: update
+    packages: |
+      com.zenika.tech.lab.ingester.model,
+      com.zenika.tech.lab.ingester.indicators.github.model,
+      com.zenika.tech.lab.ingester.indicators.stackoverflow.model,
+
+    # And one non default datasource (SQLite)
+    stackoverflow:
+      datasource: stackoverflow
+      packages: com.zenika.tech.lab.ingester.indicators.stackoverflow.dump
+  http:
+    port: 9000
+  log:
+    console:
+      level: DEBUG
+    category:
+      io.smallrye.graphql.client:
+        level: TRACE
+        min-level: TRACE
+      org.jboss.resteasy.reactive.client.logging:
+        level: INFO
+  rate-limiter:
+    buckets:
+      librariesio:
+        limits:
+          - period: 1m
+            permitted-uses: 60
+            shared: true
+          - period: 1m
+            permitted-uses: 60
+            shared: true
+      stackexchange:
+        limits:
+          - period: 1s
+            permitted-uses: 30
+            shared: true
+          - period: 1s
+            permitted-uses: 30
+            shared: true
+  rest-client:
+    npmjs-api:
+      url: https://api.npmjs.org/
+    librariesio:
+      url: https://libraries.io/api
+    stackexchange:
+      url: https://api.stackexchange.com/
+    logging:
+      body-limit: 1024
+      scope: request-response
+      extensions-api:
+        scope: all
+  smallrye-graphql-client:
+    github:
+      header:
+        Authorization: Bearer ${tech-lab-ingester.github.token}
+        Content-Type: application/json; charset=utf-8
+      url: https://api.github.com/graphql
+tech-lab-ingester:
+  # Values in this key should be in the form "platform:name"
+  priorized-technologies:
+    - NPM:react
+    - NPM:vue
+    - NPM:@angular/core
+  export:
+    INDICATOR_COMPUTATION:
+      csv:
+        enabled: false
+    GITHUB_STARS:
+      csv:
+        to:
+          gcp:
+            enabled: false
+    GITHUB_FORKS:
+      csv:
+        to:
+          gcp:
+            enabled: false
+      
+  indicators:
+    computations:
+      findAllPriorized:
+        sql: |
+          SELECT * from indicator_computation ic 
+          ORDER BY
+            CASE
+              WHEN ic.technology_id in :priorized then 0
+              WHEN ic.technology_id not in :priorized then 1
+            END,
+            ic.indicator_date asc
+            ;
+      # The "interesting" technologies are the ones for which we want indicators to be computed first
+      interesting:
+        technologies:
+          - 2 # React
+          - 17 # Vue
+          - 2410 # Angular
+    github:
+      stars:
+        graphql:
+          # Notice that history is fetched backwards (from the most recent to the most ancient)
+          history: |
+            query($owner:String!, $name:String!, $before:String="") {
+              repository(owner: $owner, name: $name) {
+                stargazers(last: 100, before:$before) {
+                  pageInfo {
+                    endCursor
+                    hasNextPage
+                    hasPreviousPage
+                    startCursor
+                  }
+                  edges {
+                    starredAt
+                    node {
+                      login
+                    }
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          today: |
+            query($owner:String!, $name:String!) {
+              repository(owner:$owner, name:$name) {
+                stargazerCount
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM STAR_DATE) AS STAR_YEAR,
+              EXTRACT(MONTH FROM STAR_DATE) AS STAR_MONTH,
+              COUNT(STAR_DATE) AS STARS_BY_MONTH
+            FROM
+              GITHUB_STARS WHERE REPO_OWNER=:owner AND REPO_NAME=:name GROUP BY EXTRACT(YEAR FROM STAR_DATE), EXTRACT(MONTH FROM STAR_DATE) ;
+      forks: # New section for forks
+        graphql:
+          # Query for total number of forks
+          today: | 
+            query($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                forkCount
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                forks(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt 
+                    owner {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM FORK_DATE) AS FORK_YEAR,
+              EXTRACT(MONTH FROM FORK_DATE) AS FORK_MONTH,
+              COUNT(FORK_DATE) AS FORK_BY_MONTH
+            FROM
+              GITHUB_FORKS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
+
+      issues:
+        graphql:
+          # Query for total number of issues
+          today: |
+            query ($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                issues {
+                  totalCount
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query ($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                issues(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt
+                    author {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual issues
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM ISSUE_DATE) AS ISSUE_YEAR,
+              EXTRACT(MONTH FROM ISSUE_DATE) AS ISSUE_MONTH,
+              COUNT(ISSUE_DATE) AS ISSUE_BY_MONTH
+            FROM
+              GITHUB_ISSUES
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM ISSUE_DATE), EXTRACT(MONTH FROM ISSUE_DATE);
+      discussions: # New section for discussions
+        graphql:
+          # Query for total number of discussions
+          today: |
+            query($owner: String!, $name: String!) {
+              repository(owner: $owner, name: $name) {
+                discussions {
+                  totalCount
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+          history: |
+            query($owner: String!, $name: String!, $before: String) {
+              repository(owner: $owner, name: $name) {
+                discussions(last: 100, before: $before) {
+                  totalCount
+                  nodes {
+                    createdAt 
+                    author {
+                      login
+                    }
+                  }
+                  pageInfo {
+                    hasPreviousPage
+                    startCursor
+                  }
+                }
+              }
+              rateLimit {
+                cost
+              }
+            }
+        sql:
+          # Build the global indicator from individual stargazers
+          indicator: |
+            SELECT
+              EXTRACT(YEAR FROM FORK_DATE) AS FORK_YEAR,
+              EXTRACT(MONTH FROM FORK_DATE) AS FORK_MONTH,
+              COUNT(FORK_DATE) AS FORK_BY_MONTH
+            FROM
+              GITHUB_FORKS
+            WHERE REPO_OWNER=:owner AND REPO_NAME=:name
+            GROUP BY EXTRACT(YEAR FROM FORK_DATE), EXTRACT(MONTH FROM FORK_DATE);
+    stackexchange:
+      override:
+        # Set to false in normal mode (because we can't alter the jar there)
+        mappings: false
+      questions:
+      # Read the questions between the two given dates (dates are given to avoid being slow too often)
+        sql: |
+          select 
+            STRFTIME('%Y', p.CreationDate ) as creation_year, 
+            STRFTIME('%m', p.CreationDate ) as creation_month, 
+            COUNT(*) as questions_per_month
+          from Posts p
+          where p.PostTypeId=1
+          and p.Tags like :tag
+          and p.CreationDate between :start and :end
+          group by creation_year, creation_month
+          order by creation_year, creation_month
+          ;
+  projects:
+    per:
+      page: 10
+      platform: 1000
