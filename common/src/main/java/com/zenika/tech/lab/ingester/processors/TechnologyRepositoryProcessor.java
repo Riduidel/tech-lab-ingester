@@ -1,25 +1,24 @@
 package com.zenika.tech.lab.ingester.processors;
 
-import java.util.List;
-import java.util.function.Consumer;
-
-import org.apache.camel.Exchange;
-
 import com.zenika.tech.lab.ingester.model.IndicatorRepository;
 import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators;
-
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.apache.camel.Exchange;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 @ApplicationScoped
 public class TechnologyRepositoryProcessor {
-	@Inject TechnologyRepository technologies;
-	@Inject IndicatorRepository indicators;
+	@Inject
+    TechnologyRepository technologies;
+	@Inject
+    IndicatorRepository indicators;
 
 	@Transactional
 	public void findAllTechnologies(Exchange exchange) {

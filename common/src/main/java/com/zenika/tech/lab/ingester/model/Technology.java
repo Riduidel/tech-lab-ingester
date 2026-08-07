@@ -1,17 +1,11 @@
 package com.zenika.tech.lab.ingester.model;
 
-import java.util.Objects;
-
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import io.smallrye.graphql.api.Scalar;
+import jakarta.persistence.*;
 import org.jilt.Builder;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.NamedNativeQueries;
-import jakarta.persistence.NamedNativeQuery;
+import java.util.Objects;
 
 /**
  * Class containing stored informations of technologies.

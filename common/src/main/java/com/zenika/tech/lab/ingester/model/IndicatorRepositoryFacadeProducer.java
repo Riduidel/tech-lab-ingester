@@ -9,8 +9,7 @@ import jakarta.inject.Inject;
 public class IndicatorRepositoryFacadeProducer {
 	@Inject IndicatorRepository repository;
 	@Produces
-	@IndicatorNamed
-	IndicatorRepositoryFacade createFacadeFor(InjectionPoint injectionPoint) {
+    IndicatorRepositoryFacade createFacadeFor(InjectionPoint injectionPoint) {
 		return injectionPoint.getQualifiers().stream()
 			.filter(a -> a instanceof IndicatorNamed)
 			.map(a -> (IndicatorNamed) a)

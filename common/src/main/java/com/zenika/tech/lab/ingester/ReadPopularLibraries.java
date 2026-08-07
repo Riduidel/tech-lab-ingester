@@ -1,10 +1,13 @@
 package com.zenika.tech.lab.ingester;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-
+import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
+import com.zenika.tech.lab.ingester.librariesio.model.Platform;
+import com.zenika.tech.lab.ingester.librariesio.model.Project;
+import com.zenika.tech.lab.ingester.model.Technology;
+import com.zenika.tech.lab.ingester.model.TechnologyRepository;
+import io.quarkus.logging.Log;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 import org.apache.camel.AggregationStrategy;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
@@ -15,17 +18,10 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
-import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
-import com.zenika.tech.lab.ingester.librariesio.model.Platform;
-import com.zenika.tech.lab.ingester.librariesio.model.Project;
-import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.model.TechnologyRepository;
-
-import io.quarkus.logging.Log;
-import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 @ApplicationScoped
 public class ReadPopularLibraries extends EndpointRouteBuilder {

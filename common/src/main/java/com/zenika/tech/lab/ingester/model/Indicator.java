@@ -1,22 +1,11 @@
 package com.zenika.tech.lab.ingester.model;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
+
 import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
-
-import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.NamedNativeQueries;
-import jakarta.persistence.NamedNativeQuery;
-import jakarta.persistence.Table;
 
 /**
  * An indicator refers to a technology, so the technology has to be part of the id

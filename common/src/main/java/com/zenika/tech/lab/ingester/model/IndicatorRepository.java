@@ -1,23 +1,19 @@
 package com.zenika.tech.lab.ingester.model;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.temporal.TemporalAdjusters;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
+import com.zenika.tech.lab.ingester.model.Indicator;
+import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators.IndicatorDataPoint;
-
-import io.quarkus.hibernate.orm.PersistenceUnit;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
+import java.util.*;
 
 @ApplicationScoped
 public class IndicatorRepository  implements PanacheRepository<Indicator> {

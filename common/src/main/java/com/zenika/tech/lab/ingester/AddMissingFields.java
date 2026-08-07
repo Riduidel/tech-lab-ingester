@@ -1,41 +1,25 @@
 package com.zenika.tech.lab.ingester;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.TagService;
+import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
+import com.zenika.tech.lab.ingester.librariesio.model.Platform;
+import com.zenika.tech.lab.ingester.model.Technology;
+import io.quarkus.logging.Log;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import org.apache.camel.Exchange;
+import org.apache.camel.builder.EndpointConsumerBuilder;
+import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.LoggingLevel;
-import org.apache.camel.builder.EndpointConsumerBuilder;
-import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
-import org.apache.camel.component.file.FileConstants;
-import org.apache.camel.model.dataformat.YAMLLibrary;
-import org.apache.commons.io.FileUtils;
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.yaml.snakeyaml.DumperOptions;
-import org.yaml.snakeyaml.Yaml;
-
-import com.zenika.tech.lab.ingester.indicators.stackoverflow.BadTagMappingsFor;
-import com.zenika.tech.lab.ingester.indicators.stackoverflow.TagService;
-import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
-import com.zenika.tech.lab.ingester.librariesio.model.Platform;
-import com.zenika.tech.lab.ingester.model.Technology;
-import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
-import com.zenika.tech.lab.ingester.utils.MapUtils;
-
-import io.quarkus.logging.Log;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class AddMissingFields extends EndpointRouteBuilder {

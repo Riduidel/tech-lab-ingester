@@ -1,18 +1,17 @@
 package com.zenika.tech.lab.ingester.model;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import com.zenika.tech.lab.ingester.Configuration;
-
+import com.zenika.tech.lab.ingester.model.IndicatorComputation;
+import com.zenika.tech.lab.ingester.model.Technology;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class IndicatorComputationRepository implements PanacheRepository<IndicatorComputation>{

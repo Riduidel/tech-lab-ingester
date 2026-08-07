@@ -1,20 +1,16 @@
 package com.zenika.tech.lab.ingester.model;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import org.eclipse.microprofile.config.inject.ConfigProperty;
-
-import com.zenika.tech.lab.ingester.Configuration;
-
-import io.smallrye.common.annotation.Identifier;
+import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Named;
 import jakarta.transaction.Transactional;
-import io.quarkus.logging.Log;
-import io.quarkus.panache.common.Parameters;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class PriorizedTechnologiesProducer {
