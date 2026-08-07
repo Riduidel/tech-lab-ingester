@@ -3,6 +3,8 @@ package com.zenika.tech.lab.ingester.export.json;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
+import com.zenika.tech.lab.ingester.Configuration;
+import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.AggregationStrategies;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;

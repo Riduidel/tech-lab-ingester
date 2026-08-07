@@ -21,5 +21,11 @@
             <artifactId>utilities</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.zenika.tech-lab</groupId>
+            <artifactId>common</artifactId>
+            <version>local-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
