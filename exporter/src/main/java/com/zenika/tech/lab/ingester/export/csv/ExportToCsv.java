@@ -17,14 +17,9 @@ import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.builder.endpoint.dsl.FileEndpointBuilderFactory.FileEndpointBuilder;
 import org.apache.camel.component.file.GenericFileExist;
-import org.apache.camel.component.google.storage.GoogleCloudStorageConstants;
 import org.apache.camel.model.dataformat.CsvDataFormat;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import com.zenika.tech.lab.ingester.Configuration;
-import com.zenika.tech.lab.ingester.Main;
-
-import io.agroal.api.AgroalDataSource;
 import io.quarkus.logging.Log;
 import io.smallrye.config.SmallRyeConfig;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -36,6 +31,8 @@ import jakarta.persistence.NamedNativeQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.metamodel.EntityType;
 import jakarta.persistence.metamodel.Metamodel;
+import com.zenika.tech.lab.ingester.Configuration;
+
 
 @ApplicationScoped
 public class ExportToCsv extends EndpointRouteBuilder {

@@ -1,11 +1,11 @@
 package com.zenika.tech.lab.ingester.model.export;
 
+import com.zenika.tech.lab.ingester.model.Technology;
+
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Map;
-
-import com.zenika.tech.lab.ingester.model.Technology;
 
 /**
  * A class linking a technology to all its indicators

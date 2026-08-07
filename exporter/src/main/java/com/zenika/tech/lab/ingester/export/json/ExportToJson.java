@@ -10,9 +10,7 @@ import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.Direct
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
-import com.zenika.tech.lab.ingester.Configuration;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators;
-import com.zenika.tech.lab.ingester.processors.TechnologyRepositoryProcessor;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
