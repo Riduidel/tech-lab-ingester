@@ -2,25 +2,20 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
 
+import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 import org.apache.camel.builder.endpoint.dsl.DirectEndpointBuilderFactory.DirectEndpointBuilder;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
-import org.threeten.bp.Instant;
 
-import com.zenika.tech.lab.ingester.indicators.IndicatorComputer;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.dump.PostRepository;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologiesRepository;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;

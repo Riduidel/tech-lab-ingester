@@ -10,12 +10,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import com.zenika.tech.lab.ingester.TechLabIngesterException;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnology;
 import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
 import com.zenika.tech.lab.ingester.model.Technology;
 
-public class BadTagMappingsFor extends TechLabIngesterException {
+public class BadTagMappingsFor extends RuntimeException {
 
 	private KnownTechnology known;
 	private Set<Tag> tags;
