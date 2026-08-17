@@ -146,7 +146,7 @@ public class ExportToCsv extends EndpointRouteBuilder {
 	}
 
 	private List<CSVTableExport> createTableDefinitions() {
-		String rootPackage = Main.class.getPackageName();
+		String rootPackage = "com.zenika.tech.lab.ingester.Main";
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		Metamodel metamodel = entityManager.getMetamodel();
 		Set<EntityType<?>> entities = metamodel.getEntities();

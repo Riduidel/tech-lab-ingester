@@ -3,6 +3,7 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import com.zenika.tech.lab.ingester.model.TechnologyRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -75,7 +76,7 @@ class TagServiceForVirtualSiteTest {
 	@Inject
 	KnownTechnologiesRepository knownTechnologies;
 	@Inject
-	TechnologyRepository technologies;
+    TechnologyRepository technologies;
 	@Inject
 	TagRepository tags;
 	@Inject

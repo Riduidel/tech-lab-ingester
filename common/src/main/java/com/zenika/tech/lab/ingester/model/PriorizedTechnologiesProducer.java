@@ -1,5 +1,6 @@
 package com.zenika.tech.lab.ingester.model;
 
+import com.zenika.tech.lab.ingester.Configuration;
 import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -18,7 +19,7 @@ public class PriorizedTechnologiesProducer {
 	@Transactional
 	@Named("priorized")
 	List<Technology> buildPriorizedTechnologiesList(
-			@ConfigProperty(name=Configuration.CONFIGURATION_PREFIX + "priorized-technologies") List<String> priorized,
+			@ConfigProperty(name= Configuration.CONFIGURATION_PREFIX + "priorized-technologies") List<String> priorized,
 			TechnologyRepository technologies) {
 		// In a very, VERY, strange fashion, config is not obtained from injection,
 		// but from that damn old ServiceProvider thingie

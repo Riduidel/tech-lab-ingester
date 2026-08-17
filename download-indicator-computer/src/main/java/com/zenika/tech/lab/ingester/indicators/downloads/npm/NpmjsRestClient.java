@@ -3,6 +3,7 @@ package com.zenika.tech.lab.ingester.indicators.downloads.npm;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.zenika.tech.lab.ingester.model.Technology;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 

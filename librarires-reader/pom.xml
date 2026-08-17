@@ -19,8 +19,8 @@
     <dependencies>
         <dependency>
             <groupId>com.zenika.tech-lab</groupId>
-            <artifactId>utilities</artifactId>
-            <version>local-SNAPSHOT</version>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

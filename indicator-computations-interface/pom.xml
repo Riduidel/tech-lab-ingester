@@ -19,8 +19,13 @@
         <dependency>
             <groupId>com.zenika.tech-lab</groupId>
             <artifactId>common</artifactId>
-            <version>local-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cc.jilt</groupId>
+            <artifactId>jilt</artifactId>
+            <scope>provided</scope>
+            <!-- Jilt is not needed at runtime -->
         </dependency>
     </dependencies>
 

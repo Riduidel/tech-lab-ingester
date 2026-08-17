@@ -1,6 +1,5 @@
 package com.zenika.tech.lab.ingester.model;
 
-import com.zenika.tech.lab.ingester.librariesio.model.Project;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -24,7 +23,7 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		return returned;
 	}
 
-	private Technology newTechnology(Project body) {
+	private Technology newTechnology(Acl.Project body) {
 		Technology returned = new Technology();
 		returned.name = body.getName();
 		returned.description = body.getDescription();

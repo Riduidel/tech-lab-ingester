@@ -4,17 +4,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import com.zenika.tech.lab.ingester.model.*;
+import indicators.IndicatorComputer;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.quarkus.test.CamelQuarkusTestSupport;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import com.zenika.tech.lab.ingester.model.IndicatorComputation;
-import com.zenika.tech.lab.ingester.model.IndicatorComputationBuilder;
-import com.zenika.tech.lab.ingester.model.IndicatorComputationRepository;
-import com.zenika.tech.lab.ingester.model.TechnologyBuilder;
 
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.enterprise.inject.Instance;
@@ -24,7 +21,8 @@ import jakarta.transaction.Transactional;
 @QuarkusTest
 class IndicatorComputationProcessorTest extends CamelQuarkusTestSupport {
 	
-	@Inject TechnologyRepository technologies;
+	@Inject
+    TechnologyRepository technologies;
 	@Inject IndicatorComputationRepository indicatorComputations;
 	@Inject IndicatorComputationProcessor tested;
 	@Inject Instance<IndicatorComputer> indicatorComputers;

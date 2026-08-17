@@ -1,7 +1,5 @@
 package com.zenika.tech.lab.ingester.model;
 
-import com.zenika.tech.lab.ingester.model.Indicator;
-import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.export.ComputedIndicators.IndicatorDataPoint;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
