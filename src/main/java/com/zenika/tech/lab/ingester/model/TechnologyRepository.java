@@ -11,18 +11,8 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 
 	@Transactional
 	public Technology findOrCreateFromLibrariesIOLibrary(Project body) {
-		Technology returned = null;
-		// First find the reference url
-		if(body.getPackageManagerUrl() != null) {
-			returned = find("packageManagerUrl", body.getPackageManagerUrl()).firstResult();
-			if(returned!=null) {
-				return returned;
-			}
-		}
-		// If not found, create it and persist it immediatly
-		returned = newTechnology(body);
-		persist(returned);
-		return returned;
+		Technology returned = newTechnology(body);
+		return findOrCreate(returned);
 	}
 
 	private Technology newTechnology(Project body) {
