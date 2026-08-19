@@ -107,6 +107,7 @@ class TagServiceDetectTagsTest {
 		// Given
 		// We may have case where nothing exists in DB (typically CI)
 		// In such a case, we have to register both technology and tags
+        source.id = null;
 		source = technologies.findOrCreate(source);
 		expected = expected.stream()
 			.map(t -> new TagDefinition(t.name, 1, false, Collections.emptyList(), false, false, LocalDate.now()))
@@ -147,6 +148,7 @@ class TagServiceDetectTagsTest {
 		// Given
 		// We may have case where nothing exists in DB (typically CI)
 		// In such a case, we have to register both technology and tags
+        source.id = null;
 		source = technologies.findOrCreate(source);
 		expected = expected.stream()
 			.map(t -> new TagDefinition(t.name, 1, false, Collections.emptyList(), false, false, LocalDate.now()))
