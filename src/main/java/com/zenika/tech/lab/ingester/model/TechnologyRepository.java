@@ -38,6 +38,9 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		}
 		// If not found, create it and persist it immediatly
 		returned = source;
+		// We set the id to null because persist will result in an INSERT or UPDATE sql sttatement
+		// upon THAT field value
+		returned.id = null;
 		persist(returned);
 		return returned;
 	}
