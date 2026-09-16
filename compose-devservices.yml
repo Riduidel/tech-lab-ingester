@@ -1,0 +1,11 @@
+services:
+  db:
+    image: docker.io/library/postgres:17
+    ports:
+      - '15432:5432'
+    environment:
+      POSTGRES_USER: tech-lab-ingester
+      POSTGRES_PASSWORD: tech-lab-ingester
+      POSTGRES_DB: tech-lab-ingester
+    volumes:
+      - "./data/database/postgresql:/var/lib/postgresql/data"
