@@ -88,137 +88,10 @@
                 <version>2.16.0</version>
             </dependency>
             <dependency>
-                <groupId>cc.jilt</groupId>
-                <artifactId>jilt</artifactId>
-                <version>1.9</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <!-- 4. Extensions Quarkus gérées par le BOM -->
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-arc</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-cache</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-config-yaml</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-flyway</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-hibernate-orm-panache</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-jdbc-postgresql</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-rest-client-jackson</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-smallrye-fault-tolerance</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-smallrye-graphql-client</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-undertow</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-vertx</artifactId>
-            </dependency>
-
-            <!-- 5. Apache Camel & Camel Quarkus -->
-            <dependency>
-                <groupId>org.apache.camel</groupId>
-                <artifactId>camel-endpointdsl</artifactId>
-            </dependency>
-            <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-google-storage</artifactId>
                 <version>${camel.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-bean</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-csimple</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-csv</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-direct</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-http</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-jackson</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-jdbc</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-jpa</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-log</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-management</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-ognl</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-quartz</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-seda</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-snakeyaml</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-sql</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-timer</artifactId>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-xml-jaxb</artifactId>
-            </dependency>
-
             <!-- 6. Utilitaires -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
@@ -230,33 +103,14 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.17.0</version>
             </dependency>
+            <dependency>
+                <groupId>cc.jilt</groupId>
+                <artifactId>jilt</artifactId>
+                <version>1.9</version>
+                <scope>provided</scope>
+            </dependency>
 
             <!-- 7. Tests -->
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-junit5</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-junit5-component</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-junit5-mockito</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-junit5</artifactId>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.camel.quarkus</groupId>
-                <artifactId>camel-quarkus-mock</artifactId>
-                <scope>test</scope>
-            </dependency>
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
@@ -523,7 +377,7 @@
             <activation>
                 <file>
                     <!-- Yup, it's an always-active profile -->
-                    <exists>pom.xml</exists>
+                    <exists>target/site/jacoco/index.html</exists>
                 </file>
             </activation>
             <build>

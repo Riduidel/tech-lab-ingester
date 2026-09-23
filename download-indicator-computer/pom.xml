@@ -41,7 +41,6 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-flyway</artifactId>
-            sion&gt;
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -54,7 +53,6 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-rest-client-jackson</artifactId>
-            on&gt;
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
