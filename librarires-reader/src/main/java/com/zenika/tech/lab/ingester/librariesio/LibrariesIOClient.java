@@ -4,7 +4,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.zenika.tech.lab.ingester.model.IProject;
+
+import com.zenika.tech.lab.ingester.librariesio.model.Project;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import com.zenika.tech.lab.ingester.librariesio.model.Platform;
@@ -27,17 +28,17 @@ public interface LibrariesIOClient {
 	// "https://libraries.io/api/search?api_key={{LIBRARIES_IO_API_KEY}}&page=${exchangeProperty.libraries_io_page_index}&per_page=100&platforms=${exchangeProperty.libraries_io_platform}"
 	@GET @Path("/search")
 	@CacheResult(cacheName="libraries-io-projects-per-platform") 
-	public List<IProject> searchProjectsForPlatform(@QueryParam("page") int page, @QueryParam("per_page") int perPage, @QueryParam("platforms") String platform);
+	public List<Project> searchProjectsForPlatform(@QueryParam("page") int page, @QueryParam("per_page") int perPage, @QueryParam("platforms") String platform);
 	
 	@CacheResult(cacheName="libraries-io-search-results") 
-	public default List<IProject> searchProjectsByText(String text) {
+	public default List<Project> searchProjectsByText(String text) {
 		return searchProjectsByText(100, text);
 	}
-	public default List<IProject> searchProjectsByText(int perPage, String text) {
+	public default List<Project> searchProjectsByText(int perPage, String text) {
 		boolean hasNextPage = true;
-		List<IProject> allProjects = new LinkedList<IProject>();
+		List<Project> allProjects = new LinkedList<Project>();
     	for (int i = 1; hasNextPage; i++) {
-			List<IProject> libraries = searchProjectsByText(i, perPage, text, "stars");
+			List<Project> libraries = searchProjectsByText(i, perPage, text, "stars");
 			allProjects.addAll(libraries);
 			hasNextPage = libraries.size()==perPage;
 		}
@@ -53,5 +54,5 @@ public interface LibrariesIOClient {
 	 * @return
 	 */
 	@GET @Path("/search")
-	public List<IProject> searchProjectsByText(@QueryParam("page") int page, @QueryParam("per_page") int perPage, @QueryParam("q") String text, @QueryParam("sort") String sort);
+	public List<Project> searchProjectsByText(@QueryParam("page") int page, @QueryParam("per_page") int perPage, @QueryParam("q") String text, @QueryParam("sort") String sort);
 }

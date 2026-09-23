@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.zenika.tech.lab.ingester.IProject;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -50,7 +51,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "versions"
 })
 @Generated("jsonschema2pojo")
-public class Project {
+public class Project implements IProject {
 
     @JsonProperty("code_of_conduct_url")
     private String codeOfConductUrl;
@@ -118,6 +119,7 @@ public class Project {
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("code_of_conduct_url")
+    @Override
     public String getCodeOfConductUrl() {
         return codeOfConductUrl;
     }
@@ -128,6 +130,7 @@ public class Project {
     }
 
     @JsonProperty("contributions_count")
+    @Override
     public Integer getContributionsCount() {
         return contributionsCount;
     }
@@ -138,6 +141,7 @@ public class Project {
     }
 
     @JsonProperty("contribution_guidelines_url")
+    @Override
     public String getContributionGuidelinesUrl() {
         return contributionGuidelinesUrl;
     }
@@ -148,6 +152,7 @@ public class Project {
     }
 
     @JsonProperty("dependent_repos_count")
+    @Override
     public Integer getDependentReposCount() {
         return dependentReposCount;
     }
@@ -158,6 +163,7 @@ public class Project {
     }
 
     @JsonProperty("dependents_count")
+    @Override
     public Integer getDependentsCount() {
         return dependentsCount;
     }
@@ -168,6 +174,7 @@ public class Project {
     }
 
     @JsonProperty("deprecation_reason")
+    @Override
     public Object getDeprecationReason() {
         return deprecationReason;
     }
@@ -178,6 +185,7 @@ public class Project {
     }
 
     @JsonProperty("description")
+    @Override
     public String getDescription() {
         return description;
     }
@@ -188,6 +196,7 @@ public class Project {
     }
 
     @JsonProperty("forks")
+    @Override
     public Integer getForks() {
         return forks;
     }
@@ -198,6 +207,7 @@ public class Project {
     }
 
     @JsonProperty("funding_urls")
+    @Override
     public List<String> getFundingUrls() {
         return fundingUrls;
     }
@@ -208,6 +218,7 @@ public class Project {
     }
 
     @JsonProperty("homepage")
+    @Override
     public String getHomepage() {
         return homepage;
     }
@@ -218,6 +229,7 @@ public class Project {
     }
 
     @JsonProperty("keywords")
+    @Override
     public List<String> getKeywords() {
         return keywords;
     }
@@ -228,6 +240,7 @@ public class Project {
     }
 
     @JsonProperty("language")
+    @Override
     public String getLanguage() {
         return language;
     }
@@ -238,6 +251,7 @@ public class Project {
     }
 
     @JsonProperty("latest_download_url")
+    @Override
     public String getLatestDownloadUrl() {
         return latestDownloadUrl;
     }
@@ -308,6 +322,7 @@ public class Project {
     }
 
     @JsonProperty("name")
+    @Override
     public String getName() {
         return name;
     }
@@ -328,6 +343,7 @@ public class Project {
     }
 
     @JsonProperty("package_manager_url")
+    @Override
     public String getPackageManagerUrl() {
         return packageManagerUrl;
     }
@@ -338,6 +354,7 @@ public class Project {
     }
 
     @JsonProperty("platform")
+    @Override
     public String getPlatform() {
         return platform;
     }
@@ -378,6 +395,7 @@ public class Project {
     }
 
     @JsonProperty("repository_url")
+    @Override
     public String getRepositoryUrl() {
         return repositoryUrl;
     }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.KnownTechnologyBuilder;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Disabled;

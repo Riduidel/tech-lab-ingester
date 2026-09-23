@@ -38,7 +38,7 @@ public class AddMissingFields extends EndpointRouteBuilder {
 	/*
 	@ConfigProperty(name = TagService.PREFIX+".mapping.merge", defaultValue = "false")
 	boolean mergeBadMappings;
-	@ConfigProperty(name = TagService.PREFIX+".mapping.file", defaultValue = "stackexchange.yaml")
+	@ConfigProperty(name = TagService.PREFIX+".mapping.file", defaultValue = "application.yaml")
 	String configurationFile;
 	@ConfigProperty(name = TagService.PREFIX+".override.mappings", defaultValue = "false")
 	boolean overrideMappings;

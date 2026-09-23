@@ -13,7 +13,7 @@ import javax.xml.transform.stream.StreamResult;
 
 def PROPERTY = "jacoco.covered.instructions.target.percentage"
 
-File jacocoReport = new File(basedir, "/target/site/jacoco/index.html")
+File jacocoReport = new File(basedir, "target/site/jacoco/index.html")
 log.info "Reading effective coverage from ${jacocoReport.absolutePath}"
 def index = Jsoup.parse(jacocoReport, "UTF-8", "http://example.com")
 def effectiveJacocoLevelElement = index.select("tfoot tr td.ctr2").first().text()

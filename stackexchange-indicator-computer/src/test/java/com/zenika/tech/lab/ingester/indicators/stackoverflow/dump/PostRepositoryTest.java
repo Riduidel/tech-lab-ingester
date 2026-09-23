@@ -14,6 +14,7 @@ import com.zenika.tech.lab.ingester.indicators.stackoverflow.model.Tag;
 import com.zenika.tech.lab.ingester.model.Indicator;
 import com.zenika.tech.lab.ingester.model.Technology;
 
+
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 

@@ -1,5 +1,6 @@
 package com.zenika.tech.lab.ingester.model;
 
+import com.zenika.tech.lab.ingester.IProject;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.transaction.Transactional;
@@ -8,7 +9,7 @@ import jakarta.transaction.Transactional;
 public class TechnologyRepository implements PanacheRepository<Technology> {
 
 	@Transactional
-	public Technology findOrCreateFromLibrariesIOLibrary(Project body) {
+	public Technology findOrCreateFromLibrariesIOLibrary(IProject body) {
 		Technology returned = null;
 		// First find the reference url
 		if(body.getPackageManagerUrl() != null) {
@@ -23,7 +24,7 @@ public class TechnologyRepository implements PanacheRepository<Technology> {
 		return returned;
 	}
 
-	private Technology newTechnology(Acl.Project body) {
+	private Technology newTechnology(IProject body) {
 		Technology returned = new Technology();
 		returned.name = body.getName();
 		returned.description = body.getDescription();
