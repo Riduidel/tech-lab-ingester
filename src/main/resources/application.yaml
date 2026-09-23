@@ -49,13 +49,6 @@ quarkus:
     db-kind: postgresql
     devservices:
       enabled: true
-      port: 15432
-      volumes:
-        "data/database/postgresql": /var/lib/postgresql/data
-      reuse: true
-      db-name: tech-lab-ingester
-      username: tech-lab-ingester
-      password: tech-lab-ingester
     health:
       enabled: true
     jdbc:

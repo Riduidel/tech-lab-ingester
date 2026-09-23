@@ -3,6 +3,8 @@ package com.zenika.tech.lab.ingester.indicators.stackoverflow;
 import java.util.List;
 import java.util.Map;
 
+import io.quarkus.test.TestTransaction;
+import jakarta.transaction.Transactional;
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
 import org.apache.camel.RoutesBuilder;
@@ -72,7 +74,8 @@ class StackOverflowQuestionsIndicatorComputerTest extends CamelQuarkusTestSuppor
 //		return true;
 //	}
 
-	@Test @Disabled
+	@Test
+    @TestTransaction
 	void can_load_tags_from_stackoverflow() throws InterruptedException {
 		// Given
         mockEndpoint.setExpectedMessageCount(1);
@@ -81,7 +84,10 @@ class StackOverflowQuestionsIndicatorComputerTest extends CamelQuarkusTestSuppor
 //        	;
 
         // This is reactjs!
-        Technology reactjs = technologyRepository.findById(2L);
+        Technology reactjs = new Technology();
+        reactjs.name = "reactjs";
+
+        technologyRepository.persist(reactjs);
         // When
 		template.sendBody("direct:start", reactjs);
 		// Then
