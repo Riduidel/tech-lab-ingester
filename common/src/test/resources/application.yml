@@ -1,0 +1,28 @@
+quarkus:
+  datasource:
+    stackoverflow:
+      db-kind: sqlite
+      jdbc:
+        url: jdbc:sqlite:/home/nicolas-delsaux/Téléchargements/stackoverflow.com.sqlite
+        min-size: 1
+        acquisition-timeout: 99999999
+    db-kind: postgresql
+    devservices:
+        enabled: true
+    health:
+        enabled: true
+    jdbc:
+        max-size: 100
+
+  hibernate-orm:
+    database:
+        generation: update
+
+    packages:
+          - com.ingester.model
+          - com.tech.lab.ingester.model
+          - org.apache.camel.processor.idempotent.jpa
+
+    stackoverflow:
+      datasource: stackoverflow
+      packages: com.zenika.tech.lab.ingester.indicators.stackoverflow.dump
