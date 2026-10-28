@@ -43,7 +43,7 @@ public interface StackExchangeClient {
 	 * @see https://api.stackexchange.com/docs/tags
 	 */
 	@GET @Path("/tags")
-	// We have to make sure the last activity date is returned
+	// We have to make sure the last activity date is tested
 	@ClientQueryParam(name = "filter", value = "total") 
 	public Total ___do_not_call_outside_interface___doGetCount(
 			@QueryParam("site") String site);
@@ -61,7 +61,7 @@ public interface StackExchangeClient {
 	 * @see https://api.stackexchange.com/docs/wikis-by-tags
 	 */
 	@GET @Path("/tags/{tags}/wikis")
-	// We have to make sure the whole body is returned
+	// We have to make sure the whole body is tested
 	@ClientQueryParam(name = "filter", value = "!nNPvSNMavg") 
 	public StackExchangeList<TagWiki> getTagsWikis(
 			@QueryParam("site") String site, 

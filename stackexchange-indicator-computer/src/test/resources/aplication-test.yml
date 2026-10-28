@@ -1,0 +1,29 @@
+tech-lab-ingester:
+  export:
+    INDICATOR:
+      csv:
+        enabled: false
+    TECHNOLOGY:
+      csv:
+        enabled: false
+quarkus:
+  log:
+    level: INFO
+    category:
+      "org.apache.camel":
+        level: DEBUG
+      "io.quarkus.datasource":
+        level: DEBUG
+  camel:
+    context:
+      tracing: true
+  datasource:
+    stackoverflow:
+      db-kind: sqlite
+      jdbc:
+        url: "jdbc:sqlite:target/stackoverflow_posts.db"
+        min-size: 1
+        acquisition-timeout: 99999999
+database_file:
+  source-path: "src/test/resources/datas/stackoverflow_posts.db"
+  runtime-path: "target/stackoverflow_posts.db"

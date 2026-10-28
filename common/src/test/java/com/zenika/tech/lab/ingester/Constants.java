@@ -3,12 +3,11 @@ package com.zenika.tech.lab.ingester;
 import com.zenika.tech.lab.ingester.model.Technology;
 import com.zenika.tech.lab.ingester.model.TechnologyBuilder;
 
-
 public interface Constants {
 
     public static interface Technologies {
         Technology react = TechnologyBuilder.technology()
-                .id(2l)
+//				.id(2l)
                 .name("react")
                 .platform("NPM")
                 .description("React is a JavaScript library for building user interfaces.")
@@ -53,7 +52,7 @@ public interface Constants {
                 .build();
         Technology vue = TechnologyBuilder.technology()
                 .name("vue")
-                .id(17l)
+//				.id(17l)
                 .platform("NPM")
                 .homepage("https://github.com/vuejs/core/tree/main/packages/vue#readme")
                 .packageManagerUrl("https://www.npmjs.com/package/vue")
@@ -62,7 +61,7 @@ public interface Constants {
                 ;
         Technology angular = TechnologyBuilder.technology()
                 .name("@angular/core")
-                .id(2410l)
+//				.id(2410l)
                 .platform("NPM")
                 .homepage("https://github.com/angular/angular#readme")
                 .packageManagerUrl("https://www.npmjs.com/package/@angular/core")

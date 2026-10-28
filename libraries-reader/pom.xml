@@ -7,7 +7,7 @@
         <artifactId>tech-lab-ingester</artifactId>
         <version>local-SNAPSHOT</version>
     </parent>
-    <artifactId>librarires-reader</artifactId>
+    <artifactId>libraries-reader</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

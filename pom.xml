@@ -7,41 +7,50 @@
     <artifactId>tech-lab-ingester</artifactId>
     <version>local-SNAPSHOT</version>
     <packaging>pom</packaging>
+
     <modules>
-        <module>main</module>
-        <module>librarires-reader</module>
+        <module>common</module>
+        <module>libraries-reader</module>
         <module>indicator-computations-interface</module>
         <module>github-indicator-computer</module>
         <module>download-indicator-computer</module>
         <module>stackexchange-indicator-computer</module>
         <module>indicator-computations-orchestrator</module>
         <module>exporter</module>
-        <module>common</module>
+        <module>main</module>
     </modules>
+
     <properties>
         <quarkus.package.jar.type>uber-jar</quarkus.package.jar.type>
-        <!-- This version number makes no sense, cause it has to be changed in
-		GitHub Actions (see on_release_build_version.yaml) -->
         <revision>local-SNAPSHOT</revision>
         <compiler-plugin.version>3.13.0</compiler-plugin.version>
         <java.version>21</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+
+        <!-- Framework Versions -->
         <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.version>3.30.5</quarkus.platform.version>
         <camel.version>4.16.0</camel.version>
-        <skipITs>true</skipITs>
-        <surefire-plugin.version>3.5.0</surefire-plugin.version>
-        <!-- Jacoco auto-increasing tests configuration -->
+        <jilt.version>1.9</jilt.version>
         <jacoco.version>0.8.12</jacoco.version>
+        <surefire-plugin.version>3.5.0</surefire-plugin.version>
+
+        <!-- Default Enforcer Properties (Override in CI/CD or CLI) -->
+        <tech-lab-ingester.stackexchange.api.key>NONE</tech-lab-ingester.stackexchange.api.key>
+        <tech-lab-ingester.github.token>NONE</tech-lab-ingester.github.token>
+        <tech-lab-ingester.libraries.io.token>NONE</tech-lab-ingester.libraries.io.token>
+        <tech-lab-ingester.bigQuery.projectId>NONE</tech-lab-ingester.bigQuery.projectId>
+
+        <skipITs>true</skipITs>
         <jacoco.covered.instructions.target.percentage>0.19</jacoco.covered.instructions.target.percentage>
-        <chappie-extension.version>1.5.0</chappie-extension.version>
     </properties>
+
     <dependencyManagement>
         <dependencies>
-            <!-- 1. BOMs de la plateforme Quarkus -->
+            <!-- 1. Quarkus Platform BOM -->
             <dependency>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>${quarkus.platform.artifact-id}</artifactId>
@@ -49,6 +58,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- 2. Quarkus Camel BOM -->
             <dependency>
                 <groupId>${quarkus.platform.group-id}</groupId>
                 <artifactId>quarkus-camel-bom</artifactId>
@@ -56,8 +66,7 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- 2. BOM Camel Core -->
+            <!-- 3. Camel Core BOM -->
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-bom</artifactId>
@@ -66,7 +75,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- 3. Extensions Quarkiverse & Tierces -->
+            <!-- 4. Quarkiverse & Third-party Libraries -->
             <dependency>
                 <groupId>io.hawt</groupId>
                 <artifactId>hawtio-quarkus</artifactId>
@@ -92,7 +101,8 @@
                 <artifactId>camel-google-storage</artifactId>
                 <version>${camel.version}</version>
             </dependency>
-            <!-- 6. Utilitaires -->
+
+            <!-- 5. Utility Libraries -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
@@ -106,11 +116,11 @@
             <dependency>
                 <groupId>cc.jilt</groupId>
                 <artifactId>jilt</artifactId>
-                <version>1.9</version>
+                <version>${jilt.version}</version>
                 <scope>provided</scope>
             </dependency>
 
-            <!-- 7. Tests -->
+            <!-- 6. Test Dependencies -->
             <dependency>
                 <groupId>org.assertj</groupId>
                 <artifactId>assertj-core</artifactId>
@@ -122,31 +132,38 @@
 
     <build>
         <defaultGoal>verify</defaultGoal>
+        <pluginManagement>
+            <plugins>
+                <!-- Quarkus Plugin configured here, applied only in runnable modules (e.g. main) -->
+                <plugin>
+                    <groupId>${quarkus.platform.group-id}</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${quarkus.platform.version}</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <systemProperties>
+                            <api.version>1.44</api.version>
+                            <tech-lab-ingester.stackexchange.api.key>${tech-lab-ingester.stackexchange.api.key}</tech-lab-ingester.stackexchange.api.key>
+                            <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
+                            <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
+                        </systemProperties>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>generate-code</goal>
+                                <goal>generate-code-tests</goal>
+                                <goal>native-image-agent</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
         <plugins>
-            <plugin>
-                <groupId>${quarkus.platform.group-id}</groupId>
-                <artifactId>quarkus-maven-plugin</artifactId>
-                <version>${quarkus.platform.version}</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <systemProperties>
-                        <api.version>1.44</api.version>
-                        <tech-lab-ingester.stackexchange.api.key>${tech-lab-ingester.stackexchange.api.key}</tech-lab-ingester.stackexchange.api.key>
-                        <tech-lab-ingester.github.token>${tech-lab-ingester.github.token}</tech-lab-ingester.github.token>
-                        <tech-lab-ingester.libraries.io.token>${tech-lab-ingester.libraries.io.token}</tech-lab-ingester.libraries.io.token>
-                    </systemProperties>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>build</goal>
-                            <goal>generate-code</goal>
-                            <goal>generate-code-tests</goal>
-                            <goal>native-image-agent</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!-- Maven Enforcer Plugin -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -164,25 +181,27 @@
                                 </requireJavaVersion>
                                 <requireProperty>
                                     <property>tech-lab-ingester.stackexchange.api.key</property>
-                                    <message><![CDATA[tech-lab-ingester.stackexchange.api.key must be specified.]]></message>
+                                    <message>tech-lab-ingester.stackexchange.api.key must be specified.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>tech-lab-ingester.libraries.io.token</property>
-                                    <message><![CDATA[tech-lab-ingester.libraries.io.token must be specified.]]></message>
+                                    <message>tech-lab-ingester.libraries.io.token must be specified.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>tech-lab-ingester.github.token</property>
-                                    <message><![CDATA[tech-lab-ingester.github.token must be specified.]]></message>
+                                    <message>tech-lab-ingester.github.token must be specified.</message>
                                 </requireProperty>
                                 <requireProperty>
                                     <property>tech-lab-ingester.bigQuery.projectId</property>
-                                    <message><![CDATA[tech-lab-ingester.bigQuery.projectId must be specified.]]></message>
+                                    <message>tech-lab-ingester.bigQuery.projectId must be specified.</message>
                                 </requireProperty>
                             </rules>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- JaCoCo Coverage Plugin -->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -193,7 +212,6 @@
                         <exclude>**/ingester/model/*</exclude>
                         <exclude>**/github/model/*</exclude>
                         <exclude>**/stackoverflow/model/*</exclude>
-                        <!-- Standard set of exclusions-->
                         <exclude>**/annotations/*</exclude>
                         <exclude>**/enums/*</exclude>
                         <exclude>**/exceptions/*</exclude>
@@ -243,21 +261,23 @@
                 </executions>
             </plugin>
 
+            <!-- Compiler Plugin -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${compiler-plugin.version}</version>
                 <configuration>
                     <parameters>true</parameters>
-                    <!-- See https://maven.apache.org/plugins/maven-compiler-plugin-4.x/examples/annotation-processor.html -->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>cc.jilt</groupId>
                             <artifactId>jilt</artifactId>
-                            <version>1.9</version>
+                            <version>${jilt.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <!-- Surefire Plugin -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -272,6 +292,8 @@
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
+
+            <!-- Failsafe Plugin -->
             <plugin>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${surefire-plugin.version}</version>
@@ -301,6 +323,7 @@
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
+
     <developers>
         <developer>
             <id>Riduidel</id>
@@ -311,18 +334,19 @@
             </roles>
         </developer>
     </developers>
+
     <scm>
-        <!-- We use https connections for using tech-lab-ingester.github.token as
-		password -->
         <connection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</connection>
         <developerConnection>scm:git:https://git@github.com/Riduidel/tech-lab-ingester.git</developerConnection>
         <url>https://github.com/Riduidel/tech-lab-ingester.git</url>
         <tag>HEAD</tag>
     </scm>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/Riduidel/tech-lab-ingester/issues</url>
     </issueManagement>
+
     <distributionManagement>
         <repository>
             <id>github</id>
@@ -344,6 +368,7 @@
                 <quarkus.native.enabled>true</quarkus.native.enabled>
             </properties>
         </profile>
+
         <profile>
             <id>generate-json-client</id>
             <build>
@@ -369,14 +394,11 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <!-- This profile will read the jacoco report file to change
-		the value of the jacoco treshold (the best way to have code quality raising).
-		It is intended to be run in Jenkins on master branch -->
             <id>update-target-coverage</id>
             <activation>
                 <file>
-                    <!-- Yup, it's an always-active profile -->
                     <exists>target/site/jacoco/index.html</exists>
                 </file>
             </activation>
@@ -385,6 +407,7 @@
                     <plugin>
                         <groupId>org.codehaus.gmaven</groupId>
                         <artifactId>groovy-maven-plugin</artifactId>
+                        <version>2.1.1</version>
                         <dependencies>
                             <dependency>
                                 <groupId>org.jsoup</groupId>
@@ -398,7 +421,6 @@
                                 <goals>
                                     <goal>execute</goal>
                                 </goals>
-                                <!-- We have to put this one in verify to make sure all tests are done-->
                                 <phase>verify</phase>
                                 <configuration>
                                     <source>build/groovy/updateJacocoTarget.groovy</source>
@@ -409,11 +431,11 @@
                 </plugins>
             </build>
         </profile>
+
         <profile>
             <id>Make my code spotless!</id>
             <activation>
                 <file>
-                    <!-- Yup, it's an always-active profile -->
                     <exists>pom.xml</exists>
                 </file>
             </activation>
@@ -423,12 +445,10 @@
                         <groupId>com.diffplug.spotless</groupId>
                         <artifactId>spotless-maven-plugin</artifactId>
                         <version>2.43.0</version>
-                        <!-- Beware! order of elements declaration IS important -->
                         <configuration>
                             <pom>
                                 <sortPom>
                                     <encoding>UTF-8</encoding>
-                                    <!-- The encoding of the pom files -->
                                     <indentSchemaLocation>true</indentSchemaLocation>
                                     <predefinedSortOrder>custom_1</predefinedSortOrder>
                                     <sortDependencies>scope,groupId,artifactId</sortDependencies>
@@ -438,18 +458,13 @@
                         </configuration>
                         <executions>
                             <execution>
-                                <id><![CDATA[Perform all formatting operations at once]]></id>
+                                <id>Perform all formatting operations at once</id>
                                 <goals>
                                     <goal>apply</goal>
                                 </goals>
                                 <phase>process-sources</phase>
                             </execution>
                         </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.codehaus.gmaven</groupId>
-                        <artifactId>groovy-maven-plugin</artifactId>
-                        <version>2.1.1</version>
                     </plugin>
                 </plugins>
             </build>

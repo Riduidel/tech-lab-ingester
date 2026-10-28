@@ -1,9 +1,14 @@
 package com.zenika.tech.lab.ingester;
 
+import com.zenika.tech.lab.ingester.librariesio.ReadPopularLibraries;
+import io.quarkus.runtime.StartupEvent;
+import jakarta.enterprise.event.Observes;
 import org.apache.camel.builder.endpoint.EndpointRouteBuilder;
 
 import com.zenika.tech.lab.ingester.export.csv.ExportToCsv;
 import com.zenika.tech.lab.ingester.export.json.ExportToJson;
+import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.spi.ConfigSource;
 
 public class Main extends EndpointRouteBuilder {
 	
@@ -21,5 +26,14 @@ public class Main extends EndpointRouteBuilder {
 			.log("🏁 Everything should be terminated now.")
 			;
 	}
+
+    void onStart(@Observes StartupEvent ev) {
+        System.out.println("=== LOADED CONFIG SOURCES ===");
+        for (ConfigSource configSource : ConfigProvider.getConfig().getConfigSources()) {
+            System.out.println("Ordinal: " + configSource.getOrdinal()
+                    + " | Name: " + configSource.getName());
+        }
+        System.out.println("=============================");
+    }
 
 }

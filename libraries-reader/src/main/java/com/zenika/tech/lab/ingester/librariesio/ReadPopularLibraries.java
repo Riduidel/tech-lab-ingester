@@ -1,6 +1,7 @@
-package com.zenika.tech.lab.ingester;
+package com.zenika.tech.lab.ingester.librariesio;
 
-import com.zenika.tech.lab.ingester.librariesio.LibrariesIOClient;
+import com.zenika.tech.lab.ingester.Configuration;
+import com.zenika.tech.lab.ingester.IProjectService;
 import com.zenika.tech.lab.ingester.librariesio.model.Platform;
 import com.zenika.tech.lab.ingester.librariesio.model.Project;
 import com.zenika.tech.lab.ingester.model.Technology;
@@ -121,7 +122,7 @@ public class ReadPopularLibraries extends EndpointRouteBuilder {
     }
 
     private void convertLibrariesIOLibraryToTechnology(Exchange exchange) {
-        Technology returned = technologies.findOrCreateFromLibrariesIOLibrary((Project) exchange.getMessage().getBody());
+        Technology returned = technologies.findOrCreateFromLibrariesIOLibrary((IProjectService) exchange.getMessage().getBody());
         exchange.getMessage().setBody(returned);
     }
 

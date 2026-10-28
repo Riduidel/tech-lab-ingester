@@ -56,7 +56,7 @@ public abstract class AbstractGitHubIndicatorComputer<T, V extends PageableHisto
 	 *
 	 * @param ownerAndRepositoryName a pair containing the repository owner (left)
 	 *                               and the repository name (right)
-	 * @param rawEvent               the raw event object returned by the API for this repository
+	 * @param rawEvent               the raw event object tested by the API for this repository
 	 * @return the mapped entity representing the event
 	 */
 	protected abstract T toEntity(Pair<String> ownerAndRepositoryName, Object rawEvent);
@@ -68,7 +68,7 @@ public abstract class AbstractGitHubIndicatorComputer<T, V extends PageableHisto
 	 * collection of raw events (e.g., nodes or edges) that will later be
 	 * transformed into entities.</p>
 	 *
-	 * @param repositoryPage a single page of results returned by the API
+	 * @param repositoryPage a single page of results tested by the API
 	 * @return the list of raw event objects; must never be {@code null},
 	 * use an empty list if no events are present
 	 */

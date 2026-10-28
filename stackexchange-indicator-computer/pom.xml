@@ -44,12 +44,6 @@
             <artifactId>quarkus-jdbc-sqlite</artifactId>
             <version>3.0.11</version>
         </dependency>
-        <!--        <dependency>
-        <groupId>io.quarkiverse.chappie</groupId>
-        <artifactId>quarkus-chappie</artifactId>
-        <version>${chappie-extension.version}</version>
-    </dependency>
--->
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
@@ -110,14 +104,6 @@
             <artifactId>camel-google-storage</artifactId>
             <version>${camel.version}</version>
         </dependency>
-
-        <!--        <dependency>
-        <groupId>org.apache.camel</groupId>
-        <artifactId>camel-parquet-avro</artifactId>
-        <version>${camel.version}</version>
-         use the same version as your Camel core version
-    </dependency>
--->
         <dependency>
             <groupId>org.apache.camel.quarkus</groupId>
             <artifactId>camel-quarkus-bean</artifactId>
@@ -212,20 +198,19 @@
             <groupId>cc.jilt</groupId>
             <artifactId>jilt</artifactId>
             <scope>provided</scope>
-            <!-- Jilt is not needed at runtime -->
         </dependency>
-        <!--		<dependency>
-        <groupId>io.github.ncasaux</groupId>
-        <artifactId>camel-plantuml-jar</artifactId>
-        <version>1.8.0</version>
-    </dependency>
--->
         <dependency>
             <groupId>cc.jilt</groupId>
             <artifactId>jilt</artifactId>
             <version>1.9</version>
             <scope>provided</scope>
-            <!-- Jilt is not needed at runtime -->
+        </dependency>
+        <dependency>
+            <groupId>com.zenika.tech-lab</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
 
         <!-- Leave test dependencies at the end, because there will be scoping issues otherwise with

@@ -17,11 +17,17 @@
     </properties>
 
     <dependencies>
-        <!-- Les dépendances héritent des versions définies dans le BOM du parent -->
+        <dependency>
+            <groupId>com.zenika.tech-lab</groupId>
+            <artifactId>common</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>io.quarkiverse.bucket4j</groupId>
             <artifactId>quarkus-bucket4j</artifactId>
         </dependency>
+
         <dependency>
             <groupId>io.quarkiverse.jdbc</groupId>
             <artifactId>quarkus-jdbc-sqlite</artifactId>

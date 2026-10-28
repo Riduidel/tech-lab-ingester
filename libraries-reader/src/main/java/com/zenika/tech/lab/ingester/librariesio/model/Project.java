@@ -14,44 +14,43 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.zenika.tech.lab.ingester.IProject;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "code_of_conduct_url",
-    "contributions_count",
-    "contribution_guidelines_url",
-    "dependent_repos_count",
-    "dependents_count",
-    "deprecation_reason",
-    "description",
-    "forks",
-    "funding_urls",
-    "homepage",
-    "keywords",
-    "language",
-    "latest_download_url",
-    "latest_release_number",
-    "latest_release_published_at",
-    "latest_stable_release_number",
-    "latest_stable_release_published_at",
-    "license_normalized",
-    "licenses",
-    "name",
-    "normalized_licenses",
-    "package_manager_url",
-    "platform",
-    "rank",
-    "repository_license",
-    "repository_status",
-    "repository_url",
-    "security_policy_url",
-    "stars",
-    "status",
-    "versions"
+        "code_of_conduct_url",
+        "contributions_count",
+        "contribution_guidelines_url",
+        "dependent_repos_count",
+        "dependents_count",
+        "deprecation_reason",
+        "description",
+        "forks",
+        "funding_urls",
+        "homepage",
+        "keywords",
+        "language",
+        "latest_download_url",
+        "latest_release_number",
+        "latest_release_published_at",
+        "latest_stable_release_number",
+        "latest_stable_release_published_at",
+        "license_normalized",
+        "licenses",
+        "name",
+        "normalized_licenses",
+        "package_manager_url",
+        "platform",
+        "rank",
+        "repository_license",
+        "repository_status",
+        "repository_url",
+        "security_policy_url",
+        "stars",
+        "status",
+        "versions"
 })
 @Generated("jsonschema2pojo")
-public class Project implements IProject {
+public class Project {
 
     @JsonProperty("code_of_conduct_url")
     private String codeOfConductUrl;
@@ -119,7 +118,6 @@ public class Project implements IProject {
     private Map<String, Object> additionalProperties = new LinkedHashMap<String, Object>();
 
     @JsonProperty("code_of_conduct_url")
-    @Override
     public String getCodeOfConductUrl() {
         return codeOfConductUrl;
     }
@@ -130,7 +128,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("contributions_count")
-    @Override
     public Integer getContributionsCount() {
         return contributionsCount;
     }
@@ -141,7 +138,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("contribution_guidelines_url")
-    @Override
     public String getContributionGuidelinesUrl() {
         return contributionGuidelinesUrl;
     }
@@ -152,7 +148,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("dependent_repos_count")
-    @Override
     public Integer getDependentReposCount() {
         return dependentReposCount;
     }
@@ -163,7 +158,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("dependents_count")
-    @Override
     public Integer getDependentsCount() {
         return dependentsCount;
     }
@@ -174,7 +168,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("deprecation_reason")
-    @Override
     public Object getDeprecationReason() {
         return deprecationReason;
     }
@@ -185,7 +178,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("description")
-    @Override
     public String getDescription() {
         return description;
     }
@@ -196,7 +188,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("forks")
-    @Override
     public Integer getForks() {
         return forks;
     }
@@ -207,7 +198,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("funding_urls")
-    @Override
     public List<String> getFundingUrls() {
         return fundingUrls;
     }
@@ -218,7 +208,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("homepage")
-    @Override
     public String getHomepage() {
         return homepage;
     }
@@ -229,7 +218,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("keywords")
-    @Override
     public List<String> getKeywords() {
         return keywords;
     }
@@ -240,7 +228,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("language")
-    @Override
     public String getLanguage() {
         return language;
     }
@@ -251,7 +238,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("latest_download_url")
-    @Override
     public String getLatestDownloadUrl() {
         return latestDownloadUrl;
     }
@@ -322,7 +308,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("name")
-    @Override
     public String getName() {
         return name;
     }
@@ -343,7 +328,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("package_manager_url")
-    @Override
     public String getPackageManagerUrl() {
         return packageManagerUrl;
     }
@@ -354,7 +338,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("platform")
-    @Override
     public String getPlatform() {
         return platform;
     }
@@ -395,7 +378,6 @@ public class Project implements IProject {
     }
 
     @JsonProperty("repository_url")
-    @Override
     public String getRepositoryUrl() {
         return repositoryUrl;
     }
@@ -455,31 +437,31 @@ public class Project implements IProject {
         this.additionalProperties.put(name, value);
     }
 
-	@Override
-	public String toString() {
-		return "Project [" + (name != null ? "name=" + name + ", " : "")
-				+ (homepage != null ? "homepage=" + homepage + ", " : "")
-				+ (keywords != null ? "keywords=" + keywords + ", " : "")
-				+ (language != null ? "language=" + language : "") + "]";
-	}
+    @Override
+    public String toString() {
+        return "Project [" + (name != null ? "name=" + name + ", " : "")
+                + (homepage != null ? "homepage=" + homepage + ", " : "")
+                + (keywords != null ? "keywords=" + keywords + ", " : "")
+                + (language != null ? "language=" + language : "") + "]";
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(description, homepage, keywords, language, name, packageManagerUrl, repositoryUrl);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(description, homepage, keywords, language, name, packageManagerUrl, repositoryUrl);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Project other = (Project) obj;
-		return Objects.equals(description, other.description) && Objects.equals(homepage, other.homepage)
-				&& Objects.equals(keywords, other.keywords) && Objects.equals(language, other.language)
-				&& Objects.equals(name, other.name) && Objects.equals(packageManagerUrl, other.packageManagerUrl)
-				&& Objects.equals(repositoryUrl, other.repositoryUrl);
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Project other = (Project) obj;
+        return Objects.equals(description, other.description) && Objects.equals(homepage, other.homepage)
+                && Objects.equals(keywords, other.keywords) && Objects.equals(language, other.language)
+                && Objects.equals(name, other.name) && Objects.equals(packageManagerUrl, other.packageManagerUrl)
+                && Objects.equals(repositoryUrl, other.repositoryUrl);
+    }
 }
