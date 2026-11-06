@@ -1,6 +1,7 @@
 package com.zenika.tech.lab.ingester.model;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
 import jakarta.enterprise.inject.spi.InjectionPoint;
 import jakarta.inject.Inject;
@@ -8,7 +9,8 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class IndicatorRepositoryFacadeProducer {
 	@Inject IndicatorRepository repository;
-	@Produces
+    @Produces
+    @IndicatorNamed("")
     IndicatorRepositoryFacade createFacadeFor(InjectionPoint injectionPoint) {
 		return injectionPoint.getQualifiers().stream()
 			.filter(a -> a instanceof IndicatorNamed)

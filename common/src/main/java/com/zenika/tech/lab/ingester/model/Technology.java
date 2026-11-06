@@ -14,11 +14,16 @@ import java.util.Objects;
 @NamedNativeQueries({
 	@NamedNativeQuery(name="TECHNOLOGY.CSV.EXPORT", query="""
 select id,
-trim(regexp_replace(description, '[\n\r]+', ' ', 'g')) as description,
-trim(regexp_replace(homepage, '[\n\r]+', ' ', 'g')) as homepage,
-trim(regexp_replace(name, '[\n\r]+', ' ', 'g')) as name,
-trim(regexp_replace(packagemanagerurl, '[\n\r]+', ' ', 'g')) as packagemanagerurl,
-trim(regexp_replace(repositoryurl, '[\n\r]+', ' ', 'g')) as repositoryurl
+trim(regexp_replace(description, '[
+\r]+', ' ', 'g')) as description,
+trim(regexp_replace(homepage, '[
+\r]+', ' ', 'g')) as homepage,
+trim(regexp_replace(name, '[
+\r]+', ' ', 'g')) as name,
+trim(regexp_replace(packagemanagerurl, '[
+\r]+', ' ', 'g')) as packagemanagerurl,
+trim(regexp_replace(repositoryurl, '[
+\r]+', ' ', 'g')) as repositoryurl
 from technology
 			""")
 })

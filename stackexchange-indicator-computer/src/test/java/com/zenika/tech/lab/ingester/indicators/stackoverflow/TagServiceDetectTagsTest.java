@@ -55,7 +55,7 @@ where sttt.technology_id is null
 	 * </pre>
 
  */
-@QuarkusTest @Disabled
+@QuarkusTest
 class TagServiceDetectTagsTest {
 
 	@Inject TagService tested;

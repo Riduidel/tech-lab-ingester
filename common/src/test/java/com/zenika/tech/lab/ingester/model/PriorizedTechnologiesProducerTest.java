@@ -10,11 +10,7 @@ import org.mockito.Mockito;
 
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.panache.common.Parameters;
-import io.quarkus.test.component.QuarkusComponentTest;
 import io.quarkus.test.component.QuarkusComponentTestExtension;
-import io.quarkus.test.component.TestConfigProperty;
-import io.quarkus.test.component.TestConfigProperty.TestConfigProperties;
-import io.smallrye.common.annotation.Identifier;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;

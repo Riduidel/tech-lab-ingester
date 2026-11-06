@@ -1,12 +1,15 @@
 package com.zenika.tech.lab.ingester.model;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
 import java.util.Collection;
 import java.util.Date;
 
+@ApplicationScoped
 public class IndicatorRepositoryFacade {
 
-	private IndicatorRepository repository;
-	private String indicatorName;
+	private final IndicatorRepository repository;
+	private final String indicatorName;
 
 	public IndicatorRepositoryFacade(IndicatorRepository repository, String indicatorName) {
 		this.repository = repository;

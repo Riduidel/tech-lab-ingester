@@ -188,7 +188,6 @@
             <artifactId>camel-quarkus-xml-jaxb</artifactId>
         </dependency>
 
-
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
