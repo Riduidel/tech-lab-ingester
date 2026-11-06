@@ -5,7 +5,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import java.util.Collection;
 import java.util.Date;
 
-@ApplicationScoped
 public class IndicatorRepositoryFacade {
 
 	private final IndicatorRepository repository;
