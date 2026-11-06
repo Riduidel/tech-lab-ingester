@@ -1,4 +1,4 @@
-package test.java.com.zenika.tech.lab.ingester.indicators.github.graphql;
+package com.zenika.tech.lab.ingester.indicators.github.graphql;
 
 import java.util.concurrent.atomic.AtomicLong;
 

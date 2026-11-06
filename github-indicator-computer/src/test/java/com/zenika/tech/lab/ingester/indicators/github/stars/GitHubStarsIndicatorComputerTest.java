@@ -1,4 +1,4 @@
-package test.java.com.zenika.tech.lab.ingester.indicators.github.stars;
+package com.zenika.tech.lab.ingester.indicators.github.stars;
 
 import com.zenika.tech.lab.ingester.indicators.github.graphql.GitHubGraphqlFacade;
 import com.zenika.tech.lab.ingester.indicators.github.graphql.NoSuchRepository;
